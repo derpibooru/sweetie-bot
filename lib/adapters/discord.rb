@@ -54,13 +54,14 @@ class DiscordMessage < AbstractMessage
     @channel = DiscordChannel.new(event.channel)
   end
 
-  def reply(*opts)
-    opts = opts[0]
+  def reply(*args)
+    opts = args[0].is_a?(String) ? args[1] : args[0]
+    msg = args[0].is_a?(String) ? args[0] || opts[:with]
 
     if opts[:mention] != false
-      @raw.respond "#{@sender.mention}, #{opts[:with]}"
+      @raw.respond "#{@sender.mention}, #{msg}"
     else
-      @raw.respond opts[:with]
+      @raw.respond msg
     end
   end
 
