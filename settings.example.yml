@@ -1,0 +1,7 @@
+prefixes:
+  - '.'
+  - '!'
+bots:
+  -
+    id: 'bot_id_goes_here'
+    token: 'key goes here'
