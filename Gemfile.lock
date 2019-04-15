@@ -28,6 +28,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     event_emitter (0.2.6)
     ffi (1.10.0)
+    hashie (3.6.0)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -42,6 +43,7 @@ GEM
       ffi
     rbnacl (3.4.0)
       ffi
+    relative_time (1.0.0)
     rest-client (2.1.0.rc1)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -67,6 +69,8 @@ DEPENDENCIES
   activesupport
   cinch
   discordrb
+  hashie
+  relative_time
   sqlite3
 
 BUNDLED WITH

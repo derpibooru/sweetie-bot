@@ -32,7 +32,7 @@ end
 
 class DiscordUser < AbstractUser
   def initialize(user)
-    @adapter_type = :discord
+    @adapter_name = :discord
 
     @raw = user
     @nickname = user.nick
@@ -46,7 +46,7 @@ end
 
 class DiscordMessage < AbstractMessage
   def initialize(event)
-    @adapter_type = :discord
+    @adapter_name = :discord
   
     @raw = event
     @text = event.content
@@ -56,7 +56,7 @@ class DiscordMessage < AbstractMessage
 
   def reply(*args)
     opts = args[0].is_a?(String) ? args[1] : args[0]
-    msg = args[0].is_a?(String) ? args[0] || opts[:with]
+    msg = args[0].is_a?(String) ? args[0] : opts[:with]
 
     if opts[:mention] != false
       @raw.respond "#{@sender.mention}, #{msg}"
@@ -80,7 +80,7 @@ end
 
 class DiscordConnection < AbstractConnection
   def initialize(opts)
-    @adapter_type = :discord
+    @adapter_name = :discord
     @raw = Discordrb::Bot.new token: opts['token']
   end
 

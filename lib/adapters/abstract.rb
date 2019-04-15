@@ -1,9 +1,16 @@
 class AbstractAdaptable
-  attr_accessor :adapter_name
-  attr_accessor :raw
+  attr_accessor :adapter_name, :raw
 
   def is?(what)
     @adapter_name == what
+  end
+
+  def discord?
+    @adapter_name == :discord
+  end
+
+  def irc?
+    @adapter_name == :irc
   end
 end
 
@@ -19,9 +26,7 @@ class AbstractConnection < AbstractAdaptable
 end
 
 class AbstractMessage < AbstractAdaptable
-  attr_accessor :text
-  attr_accessor :sender
-  attr_accessor :channel
+  attr_accessor :text, :sender, :channel
 
   def reply(*opts)
   end
@@ -37,17 +42,14 @@ class AbstractMessage < AbstractAdaptable
 end
 
 class AbstractUser < AbstractAdaptable
-  attr_accessor :nickname
-  attr_accessor :username
+  attr_accessor :nickname, :username
 
   def mention
   end
 end
 
 class AbstractChannel < AbstractAdaptable
-  attr_accessor :id
-  attr_accessor :name
-  attr_accessor :channel_type
+  attr_accessor :id, :name, :channel_type
 
   def initialize(chan_type)
     @channel_type = chan_type

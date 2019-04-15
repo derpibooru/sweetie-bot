@@ -3,14 +3,19 @@
 require 'optparse'
 require 'yaml'
 
+require 'active_support'
 require 'adapters'
 require 'command_dispatcher'
+require 'api'
+
+::Booru = Derpibooru.new
 
 class SweetieBot
   attr_accessor :config
 
   def load_config(config_file)
     @config = YAML.load_file config_file
+    Booru.import_config @config['booru']
   end
 
   def run

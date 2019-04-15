@@ -6,5 +6,9 @@ gem 'sqlite3'
 gem 'activesupport'
 gem 'activerecord'
 
+# For API
+gem 'hashie'
+gem 'relative_time'
+
 gem 'cinch'     # irc
 gem 'discordrb' # discord
