@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'abstract.rb'
 require 'discordrb'
 
@@ -8,17 +10,17 @@ class DiscordChannel < AbstractChannel
     @name = channel.name
 
     super case channel.type
-    when 0
-      :text
-    when 1
-      :private
-    when 2
-      :voice
-    when 3
-      :group
-    else
-      :text
-    end
+          when 0
+            :text
+          when 1
+            :private
+          when 2
+            :voice
+          when 3
+            :group
+          else
+            :text
+          end
   end
 
   def send(*opts)
@@ -47,7 +49,7 @@ end
 class DiscordMessage < AbstractMessage
   def initialize(event)
     @adapter_name = :discord
-  
+
     @raw = event
     @text = event.content
     @sender = DiscordUser.new(event.author)
@@ -84,8 +86,8 @@ class DiscordConnection < AbstractConnection
     @raw = Discordrb::Bot.new token: opts['token']
   end
 
-  def connect(*opts)
-    @raw.run(true)
+  def connect(*_opts)
+    @raw.run true
   end
 
   def disconnect

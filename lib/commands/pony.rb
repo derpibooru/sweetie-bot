@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 CommandDispatcher.register name: 'pony' do |msg, args|
   data = Booru.random_image args.raw, msg.channel.nsfw?
 

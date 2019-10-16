@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'arguments'
 
 class CommandDispatcher
@@ -10,11 +12,11 @@ class CommandDispatcher
 
     raise 'No command name specified' unless opts[:name]
 
-    @commands ||= Hash.new
+    @commands ||= {}
 
     @commands[opts[:name]] = {
-      data: opts,
-      callback: Proc.new do |msg, args|
+      data:     opts,
+      callback: proc do |msg, args|
         if args
           yield msg, args
         else
@@ -41,7 +43,7 @@ class CommandDispatcher
     # Run the command if exists, ignore otherwise
     if real_command
       SweetieBot.log "#{command} (#{remainder}) from #{msg.sender.username}"
-      real_command[:callback].call(msg, self.parse_arguments(remainder))
+      real_command[:callback].call(msg, parse_arguments(remainder))
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AbstractAdaptable
   attr_accessor :adapter_name, :raw
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NoU
   def self.handle(msg)
     lower = msg.text.downcase

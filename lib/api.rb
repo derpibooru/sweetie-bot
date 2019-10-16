@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'json'
 require 'hashie'
@@ -6,18 +8,18 @@ class Derpibooru
   attr_accessor :sfw_filter, :nsfw_filter, :api_key
 
   def initialize(**args)
-    @api_base     = args[:api_base]     || 'https://derpibooru.org'
+    @api_base     = args[:api_base] || 'https://derpibooru.org'
     @api_key      = args[:key]
-    @sfw_filter   = args[:sfw_filter]   || '100073'
-    @nsfw_filter  = args[:nsfw_filter]  || '56027'
+    @sfw_filter   = args[:sfw_filter] || '100073'
+    @nsfw_filter  = args[:nsfw_filter] || '56027'
   end
 
   def import_config(cfg)
     return if cfg.nil?
 
-    @api_key      = cfg['key']          || @api_key
-    @sfw_filter   = cfg['sfw_filter']   || @sfw_filter
-    @nsfw_filter  = cfg['nsfw_filter']  || @nsfw_filter
+    @api_key      = cfg['key'] || @api_key
+    @sfw_filter   = cfg['sfw_filter'] || @sfw_filter
+    @nsfw_filter  = cfg['nsfw_filter'] || @nsfw_filter
   end
 
   private
@@ -39,12 +41,12 @@ class Derpibooru
   end
 
   def get(**args)
-    args[:url]    ||= args[:link]   || args[:uri]
-    args[:query]  ||= args[:params]
+    args[:url] ||= args[:link] || args[:uri]
+    args[:query] ||= args[:params]
 
     uri = URI "#{@api_base}/#{args[:url]}"
 
-    uri.query = "#{args[:query]}"               if args[:query]
+    uri.query = args[:query].to_s               if args[:query]
     uri.query = "#{uri.query}&key=#{@api_key}"  if @api_key
     uri.query = "#{uri.query}#{uri.query.present? ? '&' : ''}filter_id=#{args[:nsfw] ? @nsfw_filter : @sfw_filter}"
 
@@ -74,9 +76,6 @@ class Derpibooru
 
   def random_image(query = 'safe, cute', nsfw = false)
     img = get(url: 'search.json', query: "q=#{query.present? ? query : 'safe, cute'}&random_image=1", nsfw: nsfw)
-
-    if img
-      image(img.id)
-    end
+    image img.id if img
   end
 end

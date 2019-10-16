@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Arguments
   attr_accessor :raw, :parsed
 
@@ -17,7 +19,7 @@ class Arguments
     buf = ''
 
     pieces.each do |v|
-      if buf != '' or v.start_with?('"')
+      if buf != '' || v.start_with?('"')
         buf += "#{v.gsub(/^"/, '').gsub(/"$/, '')} "
 
         if v.end_with?('"')

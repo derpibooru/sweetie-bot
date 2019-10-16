@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'json'
 
-CommandDispatcher.register name: 'printerfact' do |msg, args|
+CommandDispatcher.register name: 'printerfact' do |msg, _|
   res = Net::HTTP.get_response(URI('https://catfact.ninja/fact'))
 
-  return unless res
+  return false unless res
 
   fact = JSON.parse(res.body)['fact']
 
-  return unless fact
+  return false unless fact
 
   fact = fact.gsub(/(cat|lion|leopard|lynx)/i, 'printer')
              .gsub(/kitten/i, 'baby printer')

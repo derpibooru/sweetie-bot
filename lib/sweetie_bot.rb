@@ -20,12 +20,8 @@ class SweetieBot
   end
 
   def load_config(config_file)
-    begin
-      @config = YAML.load_file config_file
-      Booru.import_config @config['booru']
-    rescue
-      puts "Unable to load #{config_file} (file probably does not exist)"
-    end
+    @config = YAML.load_file config_file
+    Booru.import_config @config['booru']
   end
 
   def run
@@ -36,9 +32,7 @@ class SweetieBot
         if @config['prefixes'].include? msg.text[0]
           CommandDispatcher.handle msg
         else
-          unless ChatImage.handle(msg)
-            NoU.handle(msg)
-          end
+          NoU.handle(msg) unless ChatImage.handle(msg)
         end
       end
       @connections.push conn
@@ -48,12 +42,12 @@ class SweetieBot
     SweetieBot.log 'Ready!'
 
     # keep the main thread alive
-    while true
+    loop do
       if @should_stop
         stop!
         exit
       end
-      sleep 1
+      sleep 0.1
     end
   end
 
@@ -63,20 +57,20 @@ class SweetieBot
       connection.disconnect
     end
 
-    SweetieBot.log "Stopped."
+    SweetieBot.log 'Stopped.'
   end
 
   def self.main
     bot = SweetieBot.new
 
     opt_parser = OptionParser.new do |opts|
-      opts.banner = "Usage: sweetie-bot [options]"
+      opts.banner = 'Usage: sweetie-bot [options]'
 
-      opts.on("-c NAME", "--config-file=NAME", "Configuration file") do |c|
+      opts.on('-c NAME', '--config-file=NAME', 'Configuration file') do |c|
         bot.load_config(c)
       end
 
-      opts.on("-h", "--help", "Prints this help") do
+      opts.on('-h', '--help', 'Prints this help') do
         puts opts
         exit
       end
@@ -95,8 +89,8 @@ class SweetieBot
       SweetieBot.log 'Disconnecting and stopping...'
       bot.should_stop = true
     end
-  
-    SweetieBot.log "Starting..."
+
+    SweetieBot.log 'Starting...'
     bot.run
   end
 

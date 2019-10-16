@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/core_ext'
 require 'relative_time'
 
@@ -10,9 +12,9 @@ class Image
     description = args[:description] || (data.description.length < 256 ? data.description : "#{data.description[0..252]}...")
 
     if message.discord?
-      message.raw.send_embed "" do |embed|
+      message.raw.send_embed '' do |embed|
         embed.url = "https://derpibooru.org/#{data.id}"
-        embed.title = "#{data.id.to_s} (#{Derpibooru.rating(data)})"
+        embed.title = "#{data.id} (#{Derpibooru.rating(data)})"
         embed.description = description
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https:#{data.representations.large}")
         embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: "https:#{data.representations.thumb_small}")
@@ -35,9 +37,9 @@ class Image
         embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Uploaded #{nice_time} by #{data.uploader}.")
       end
     else
-      message.channel.send "https://derpibooru.org/#{data.id} (#{Derpibooru.rating(data)}) " +
-        "#{data.width}x#{data.height} (#{data.original_format}) " +
-        "uploaded by #{data.uploader} #{nice_time}.\n" +
+      message.channel.send "https://derpibooru.org/#{data.id} (#{Derpibooru.rating(data)}) " \
+        "#{data.width}x#{data.height} (#{data.original_format}) " \
+        "uploaded by #{data.uploader} #{nice_time}.\n" \
         "Tags: #{data.tags.length < 1024 ? data.tags : (data.tags[0..1020] + '...')}"
     end
   end
