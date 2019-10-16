@@ -56,7 +56,7 @@ class Derpibooru
   public
 
   def self.rating(img)
-    match = img.tags.match /(grimdark|semi\-grimdark|safe|suggestive|questionable|explicit)/
+    match = img.tags.match /\b(grimdark|semi\-grimdark|safe|suggestive|questionable|explicit)\b/
     match[1] || 'unknown'
   end
 
