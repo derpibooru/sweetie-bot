@@ -5,10 +5,13 @@ require 'relative_time'
 
 class Image
   def self.embed(img, **args)
+    max_desc_len = SweetieBot.instance.config['messages']['max_desc_length']
+    max_tags_len = SweetieBot.instance.config['messages']['max_tag_length']
+
     message = args[:message] || args[:msg]
     time = Time.parse(img.created_at)
     nice_time = RelativeTime.in_words(time)
-    description = args[:description] || (img.description.length < 256 ? img.description : "#{img.description[0..252]}...")
+    description = args[:description] || (img.description.length < max_desc_len ? img.description : "#{img.description[0..max_desc_len]}...")
 
     if censored? img, message.adapter_name.to_s
       if message.discord?
@@ -31,7 +34,7 @@ class Image
 
         tags = Discordrb::Webhooks::EmbedField.new
         tags.name = 'Tags'
-        tags.value = img.tags.length < 1024 ? img.tags : "#{img.tags[0..1020]}..."
+        tags.value = img.tags.length < max_tags_len ? img.tags : "#{img.tags[0..max_tags_len]}..."
 
         stats = Discordrb::Webhooks::EmbedField.new
         stats.name = 'Statistics'
@@ -49,12 +52,12 @@ class Image
       message.channel.send "https://derpibooru.org/#{img.id} (#{rating(img)}) " \
         "#{img.width}x#{img.height} (#{img.original_format}) " \
         "uploaded by #{img.uploader} #{nice_time}.\n" \
-        "Tags: #{img.tags.length < 1024 ? img.tags : (img.tags[0..1020] + '...')}"
+        "Tags: #{img.tags.length < max_tags_len ? img.tags : (img.tags[0..max_tags_len] + '...')}"
     end
   end
 
   def self.rating(img)
-    match = img.tags.match /\b(grimdark|semi\-grimdark|safe|suggestive|questionable|explicit)\b/
+    match = img.tags.match /\b(grimdark|semi\-grimdark|grotesque|safe|suggestive|questionable|explicit)\b/
     match[1] || 'unknown'
   end
 

@@ -3,6 +3,12 @@
 prefixes:
   - '.'
   - '!'
+messages:
+  # Maximum allowed length of the tag list before being cut off.
+  max_tag_length: 512
+
+  # Maximum allowed length of the image description before being cut off.
+  max_desc_length: 256
 # Derpibooru-specific configuration.
 booru:
   # Filter to use in NSFW channels.
@@ -21,7 +27,7 @@ booru:
       # Use leading ! to indicate NOT.
       - [ grimdark, torture ]
       - [ grimdark, animal abuse]
-      - [ gore, grotescue ]
+      - [ gore, grotesque ]
       - [ foalcon, '!safe' ]
       - kill yourself
     irc:

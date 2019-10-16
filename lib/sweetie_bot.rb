@@ -13,7 +13,9 @@ require 'database/database'
 ::Booru = Derpibooru.new
 
 class SweetieBot
-  attr_accessor :config, :connections, :should_stop
+  attr_accessor :config, :connections, :should_stop, :instance
+
+  @@instance = nil
 
   def initialize
     @should_stop = false
@@ -21,11 +23,15 @@ class SweetieBot
   end
 
   def self.version
-    '0.2.0-alpha'
+    '0.2.1-alpha'
   end
 
   def self.codename
     'I Want To Die'
+  end
+
+  def self.instance
+    @@instance
   end
 
   def load_config(config_file)
@@ -74,9 +80,9 @@ class SweetieBot
   end
 
   def self.main
-    SweetieBot.log "Derpibooru Sweetie Bot v#{SweetieBot.version} (#{SweetieBot.codename})"
+    log "Derpibooru Sweetie Bot v#{version} (#{codename})"
 
-    bot = SweetieBot.new
+    @@instance = SweetieBot.new
 
     opt_parser = OptionParser.new do |opts|
       opts.banner = 'Usage: sweetie-bot [options]'
@@ -93,25 +99,25 @@ class SweetieBot
 
     opt_parser.parse!
 
-    if bot.config.nil?
-      SweetieBot.log "No config file specified, using 'settings.yml'"
+    if @@instance.config.nil?
+      log "No config file specified, using 'settings.yml'"
 
-      bot.load_config 'settings.yml'
+      @@instance.load_config 'settings.yml'
 
-      exit if bot.config.nil?
+      exit if @@instance.config.nil?
     end
 
     Signal.trap 'INT' do
-      exit if bot.should_stop
+      exit if @@instance.should_stop
 
       puts ''
-      SweetieBot.log 'Disconnecting and stopping (press ^C again to force)...'
+      log 'Disconnecting and stopping (press ^C again to force)...'
 
-      bot.should_stop = true
+      @@instance.should_stop = true
     end
 
-    SweetieBot.log 'Starting...'
-    bot.run
+    log 'Starting...'
+    @@instance.run
   end
 
   def self.log(msg)
