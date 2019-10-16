@@ -28,8 +28,7 @@ class Image
         embed.url = "https://derpibooru.org/#{img.id}"
         embed.title = "#{img.id} (#{rating(img)})"
         embed.description = description
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https:#{img.representations.large}")
-        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: "https:#{img.representations.thumb_small}")
+        embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https:#{img.representations.full}")
         embed.timestamp = time
 
         tags = Discordrb::Webhooks::EmbedField.new
