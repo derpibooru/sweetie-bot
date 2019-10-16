@@ -20,6 +20,7 @@ class SweetieBot
   def initialize
     @should_stop = false
     @connections = []
+    @handlers = []
   end
 
   def self.version
@@ -34,12 +35,23 @@ class SweetieBot
     @@instance
   end
 
+  def handler
+    @handlers.push proc do |msg|
+      yield msg
+    end
+  end
+
   def load_config(config_file)
     @config = YAML.load_file config_file
     Booru.import_config @config['booru']
   end
 
   def run
+    # Include all handlers now.
+    Dir['./handlers/*.rb'].each do |file|
+      require file
+    end
+
     @config['bots'].each do |bot_data|
       conn = DiscordConnection.new(bot_data)
       conn.connection_id = bot_data['id']
@@ -48,7 +60,9 @@ class SweetieBot
         if @config['prefixes'].include? msg.text[0]
           CommandDispatcher.handle msg
         else
-          NoU.handle(msg) unless ChatImage.handle(msg)
+          @handlers.each do |handler|
+            break if handler.call(msg) == true
+          end
         end
       end
 

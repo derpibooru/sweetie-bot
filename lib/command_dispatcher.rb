@@ -48,6 +48,6 @@ class CommandDispatcher
   end
 end
 
-Dir['./lib/commands/*.rb'].each do |file|
+Dir['./commands/*.rb'].each do |file|
   require file
 end

@@ -4,6 +4,15 @@ require 'active_support/core_ext'
 require 'relative_time'
 
 class Image
+  def self.send_image(msg, id)
+    data = Booru.image(id)
+
+    if data
+      embed data, message: msg
+      return true
+    end
+  end
+
   def self.embed(img, **args)
     max_desc_len = SweetieBot.instance.config['messages']['max_desc_length']
     max_tags_len = SweetieBot.instance.config['messages']['max_tag_length']
