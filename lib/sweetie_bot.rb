@@ -12,16 +12,26 @@ require 'image'
 ::Booru = Derpibooru.new
 
 class SweetieBot
-  attr_accessor :config
+  attr_accessor :config, :connections, :should_stop
+
+  def initialize
+    @should_stop = false
+    @connections = []
+  end
 
   def load_config(config_file)
-    @config = YAML.load_file config_file
-    Booru.import_config @config['booru']
+    begin
+      @config = YAML.load_file config_file
+      Booru.import_config @config['booru']
+    rescue
+      puts "Unable to load #{config_file} (file probably does not exist)"
+    end
   end
 
   def run
     @config['bots'].each do |bot_data|
       conn = DiscordConnection.new(bot_data)
+      conn.connection_id = bot_data['id']
       conn.message do |msg|
         if @config['prefixes'].include? msg.text[0]
           CommandDispatcher.handle msg
@@ -31,8 +41,29 @@ class SweetieBot
           end
         end
       end
+      @connections.push conn
       conn.connect
     end
+
+    SweetieBot.log 'Ready!'
+
+    # keep the main thread alive
+    while true
+      if @should_stop
+        stop!
+        exit
+      end
+      sleep 1
+    end
+  end
+
+  def stop!
+    @connections.each do |connection|
+      puts "  -> stopping '#{connection.connection_id}'"
+      connection.disconnect
+    end
+
+    SweetieBot.log "Stopped."
   end
 
   def self.main
@@ -54,11 +85,22 @@ class SweetieBot
     opt_parser.parse!
 
     if bot.config.nil?
-      puts "No configuration file specified! Exiting."
-      exit
-    else
-      puts "Starting..."
-      bot.run
+      bot.load_config 'settings.yml'
+
+      exit if bot.config.nil?
     end
+
+    Signal.trap 'INT' do
+      puts ''
+      SweetieBot.log 'Disconnecting and stopping...'
+      bot.should_stop = true
+    end
+  
+    SweetieBot.log "Starting..."
+    bot.run
+  end
+
+  def self.log(msg)
+    puts "#{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')} - #{msg}"
   end
 end

@@ -15,6 +15,8 @@ class AbstractAdaptable
 end
 
 class AbstractConnection < AbstractAdaptable
+  attr_accessor :connection_id
+
   def connect(*opts)
   end
 

@@ -85,11 +85,11 @@ class DiscordConnection < AbstractConnection
   end
 
   def connect(*opts)
-    @raw.run
+    @raw.run(true)
   end
 
   def disconnect
-    @raw.join
+    @raw.stop
   end
 
   def message
