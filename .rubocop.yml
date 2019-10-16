@@ -25,23 +25,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 44
 
-# Offense count: 7
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/concerns/time_period.rb'
-    - 'app/models/concerns/sluggable.rb'
-    - 'app/models/livestream_channel.rb'
-    - 'app/models/tag.rb'
-    - 'app/models/twitch_channel.rb'
-    - 'app/models/user.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyleForLeadingUnderscores.
-# SupportedStylesForLeadingUnderscores: disallowed, required, optional
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'config/initializers/elasticsearch.rb'
-
 # Offense count: 266
 Style/Documentation:
   Enabled: false
@@ -50,12 +33,6 @@ Style/Documentation:
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Enabled: false
-
-# Offense count: 3
-Style/MixinUsage:
-  Exclude:
-    - 'bin/update'
-    - 'test/integration/gallery_search_test.rb'
 
 AllCops:
   TargetRubyVersion: 2.6
@@ -70,7 +47,6 @@ Style/GlobalVars:
     - "$flipper"
     - "$redis"
     - "$themes"
-# End required stuff for our setup
 
 # STYLE DECISIONS
 # Let us line things up
@@ -106,14 +82,10 @@ Style/EmptyMethod:
 # More excessive indentation avoided.
 Layout/IndentFirstArrayElement:
   EnforcedStyle: consistent
-  Exclude:
-    - 'test/lib/search_parser_test.rb'
 
 # Even more.
 Layout/IndentFirstHashElement:
   EnforcedStyle: consistent
-  Exclude:
-    - 'test/lib/search_parser_test.rb'
 
 # We should be able to comment things out, dammit
 Layout/CommentIndentation:
@@ -184,12 +156,6 @@ Style/AsciiComments:
   Enabled: false
 # End style decisions
 
-# RANDOM CRAP
-# Single quotes are required here.
-Lint/PercentStringArray:
-  Exclude:
-    - config/initializers/secure_headers.rb
-
 # Loosen metrics
 Metrics/ClassLength:
   Max: 700
@@ -198,8 +164,6 @@ Metrics/BlockLength:
   Max: 400
 
 Metrics/LineLength:
-  Exclude:
-    - app/helpers/oc_avatar_helper.rb
   Max: 300
 
 Metrics/ModuleLength:
@@ -218,12 +182,3 @@ Layout/EmptyLinesAroundAccessModifier:
 
 Lint/UselessAccessModifier:
   Enabled: false
-
-# TODO: This is HORRID and only here because fixing it is a huge task that should not be done in normal Rubocop stuff
-Style/MethodMissingSuper:
-  Exclude:
-    - 'lib/has_array_field.rb'
-
-Style/MissingRespondToMissing:
-  Exclude:
-    - 'lib/has_array_field.rb'
