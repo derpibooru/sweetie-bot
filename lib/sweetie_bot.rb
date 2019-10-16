@@ -85,8 +85,10 @@ class SweetieBot
     end
 
     Signal.trap 'INT' do
+      exit if bot.should_stop
+
       puts ''
-      SweetieBot.log 'Disconnecting and stopping...'
+      SweetieBot.log 'Disconnecting and stopping (press ^C again to force)...'
       bot.should_stop = true
     end
 
