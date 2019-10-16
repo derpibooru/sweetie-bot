@@ -1,7 +1,10 @@
 prefixes:
   - '.'
   - '!'
+booru:
+  nsfw_filter: 56027
+  sfw_filter: 100073
 bots:
   -
-    id: 'bot_id_goes_here'
-    token: 'key goes here'
+    id: 'bot_id'
+    token: 'secret_token'
