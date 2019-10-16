@@ -20,6 +20,14 @@ class SweetieBot
     @connections = []
   end
 
+  def self.version
+    '0.1.0-alpha'
+  end
+
+  def self.codename
+    'Kill Me Please'
+  end
+
   def load_config(config_file)
     @config = YAML.load_file config_file
     Booru.import_config @config['booru']
@@ -29,6 +37,7 @@ class SweetieBot
     @config['bots'].each do |bot_data|
       conn = DiscordConnection.new(bot_data)
       conn.connection_id = bot_data['id']
+
       conn.message do |msg|
         if @config['prefixes'].include? msg.text[0]
           CommandDispatcher.handle msg
@@ -36,10 +45,12 @@ class SweetieBot
           NoU.handle(msg) unless ChatImage.handle(msg)
         end
       end
+
       @connections.push conn
       conn.connect
     end
 
+    SweetieBot.log "Made #{@connections.length} connection#{@connections.length > 1 ? 's' : ''}."
     SweetieBot.log 'Ready!'
 
     # keep the main thread alive
@@ -48,6 +59,7 @@ class SweetieBot
         stop!
         exit
       end
+
       sleep 1
     end
   end
@@ -62,6 +74,8 @@ class SweetieBot
   end
 
   def self.main
+    SweetieBot.log "Derpibooru Sweetie Bot v#{SweetieBot.version} (#{SweetieBot.codename})"
+
     bot = SweetieBot.new
 
     opt_parser = OptionParser.new do |opts|
@@ -80,6 +94,8 @@ class SweetieBot
     opt_parser.parse!
 
     if bot.config.nil?
+      SweetieBot.log "No config file specified, using 'settings.yml'"
+
       bot.load_config 'settings.yml'
 
       exit if bot.config.nil?
@@ -90,6 +106,7 @@ class SweetieBot
 
       puts ''
       SweetieBot.log 'Disconnecting and stopping (press ^C again to force)...'
+
       bot.should_stop = true
     end
 
