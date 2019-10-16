@@ -8,6 +8,7 @@ require 'adapters'
 require 'command_dispatcher'
 require 'api'
 require 'image'
+require 'database/database'
 
 ::Booru = Derpibooru.new
 
@@ -47,7 +48,7 @@ class SweetieBot
         stop!
         exit
       end
-      sleep 0.1
+      sleep 1
     end
   end
 
