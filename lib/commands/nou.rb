@@ -21,6 +21,8 @@ class NoU
 
     msg.reply response
 
+    SweetieBot.log "no u from (or should I say to) #{msg.sender.username}"
+
     true
   end
 end

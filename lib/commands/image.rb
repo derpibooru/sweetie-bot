@@ -4,7 +4,10 @@ class ChatImage
   def self.handle(msg)
     match_data = msg.text.match />>([0-9]+)/
 
-    ChatImage.send_image(msg, match_data[1]) if match_data
+    if match_data
+      ChatImage.send_image(msg, match_data[1])
+      SweetieBot.log "image (#{match_data[1]}) from #{msg.sender.username}"
+    end
   end
 
   def self.send_image(msg, id)
