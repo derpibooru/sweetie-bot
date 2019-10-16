@@ -80,5 +80,7 @@ class Image
         end.include?(false)
       end
     end
+
+    false
   end
 end
