@@ -40,6 +40,7 @@ class CommandDispatcher
 
     # Run the command if exists, ignore otherwise
     if real_command
+      puts "#{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')} - #{command} (#{remainder}) from #{msg.sender.username}."
       real_command[:callback].call(msg, self.parse_arguments(remainder))
     end
   end

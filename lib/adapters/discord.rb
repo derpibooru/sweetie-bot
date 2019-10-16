@@ -26,7 +26,7 @@ class DiscordChannel < AbstractChannel
   end
 
   def nsfw?
-    true
+    @raw.nsfw? || @raw.type == :private
   end
 end
 

@@ -7,6 +7,7 @@ require 'active_support'
 require 'adapters'
 require 'command_dispatcher'
 require 'api'
+require 'image'
 
 ::Booru = Derpibooru.new
 
@@ -24,6 +25,10 @@ class SweetieBot
       conn.message do |msg|
         if @config['prefixes'].include? msg.text[0]
           CommandDispatcher.handle msg
+        else
+          unless ChatImage.handle(msg)
+            NoU.handle(msg)
+          end
         end
       end
       conn.connect
