@@ -21,11 +21,11 @@ class SweetieBot
   end
 
   def self.version
-    '0.1.0-alpha'
+    '0.2.0-alpha'
   end
 
   def self.codename
-    'Kill Me Please'
+    'I Want To Die'
   end
 
   def load_config(config_file)
