@@ -33,7 +33,13 @@ class Image
     end
 
     if message.discord?
-      message.raw.send_embed '' do |embed|
+      embed_text = if img.spoilered
+        "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||http:#{img.representations.large}||"
+      else
+        ''
+      end
+
+      message.raw.send_embed embed_text do |embed|
         embed.url = "https://derpibooru.org/#{img.id}"
         embed.title = "#{img.id} (#{rating(img)})"
         embed.description = description
