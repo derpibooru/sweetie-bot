@@ -1,10 +1,33 @@
+# Available command prefixes. 
+# Any message that starts with these characters will be interpreted as a command.
 prefixes:
   - '.'
   - '!'
+# Derpibooru-specific configuration.
 booru:
+  # Filter to use in NSFW channels.
   nsfw_filter: 56027
+
+  # Filter to use in SFW channels.
   sfw_filter: 100073
+
+  # Derpibooru API key to use.
+  key: ''
+
+  # Tags to hide, separated by adapter.
+  hidden_tags:
+    discord:
+      # Arrays are considered as AND conditions.
+      # Use leading ! to indicate NOT.
+      - [ grimdark, torture ]
+      - [ grimdark, animal abuse]
+      - [ gore, grotescue ]
+      - [ foalcon, '!safe' ]
+      - kill yourself
+    irc:
+# Any bots not defined here will not be created.
 bots:
   -
     id: 'bot_id'
     token: 'secret_token'
+    type: discord

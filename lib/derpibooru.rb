@@ -12,6 +12,7 @@ class Derpibooru
     @api_key      = args[:key]
     @sfw_filter   = args[:sfw_filter] || '100073'
     @nsfw_filter  = args[:nsfw_filter] || '56027'
+    @hidden_tags  = args[:hidden_tags] || {}
   end
 
   def import_config(cfg)
@@ -20,6 +21,7 @@ class Derpibooru
     @api_key      = cfg['key'] || @api_key
     @sfw_filter   = cfg['sfw_filter'] || @sfw_filter
     @nsfw_filter  = cfg['nsfw_filter'] || @nsfw_filter
+    @hidden_tags  = cfg['hidden_tags'] || @hidden_tags
   end
 
   private
@@ -60,6 +62,11 @@ class Derpibooru
   def self.rating(img)
     match = img.tags.match /\b(grimdark|semi\-grimdark|safe|suggestive|questionable|explicit)\b/
     match[1] || 'unknown'
+  end
+
+  def self.tag?(img, tag)
+    match = img.tags.match /\b(#{tag})\b/
+    match && match[1]
   end
 
   def image(id)

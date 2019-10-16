@@ -6,7 +6,7 @@ require 'yaml'
 require 'active_support'
 require 'adapters'
 require 'command_dispatcher'
-require 'api'
+require 'derpibooru'
 require 'image'
 require 'database/database'
 
