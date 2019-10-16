@@ -55,7 +55,7 @@ class DiscordMessage < AbstractMessage
   end
 
   def reply(*args)
-    opts = args[0].is_a?(String) ? args[1] : args[0]
+    opts = (args[0].is_a?(String) ? args[1] : args[0]) || {}
     msg = args[0].is_a?(String) ? args[0] : opts[:with]
 
     if opts[:mention] != false

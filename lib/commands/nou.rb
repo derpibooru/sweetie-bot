@@ -17,7 +17,7 @@ class NoU
       response = 'correct'
     end
 
-    msg.reply with: response
+    msg.reply response
 
     true
   end
