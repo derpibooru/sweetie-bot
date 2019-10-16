@@ -45,6 +45,7 @@ class Image
         embed.description = description
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https:#{img.representations.full}")
         embed.timestamp = time
+        embed.color = rating_color(rating(img))
 
         tags = Discordrb::Webhooks::EmbedField.new
         tags.name = 'Tags'
@@ -78,6 +79,25 @@ class Image
   def self.tag?(img, tag)
     match = img.tags.match /\b(#{tag})\b/
     match && match[1]
+  end
+
+  def self.rating_color(rating)
+    case rating
+    when 'safe'
+      return '4BBA52'.to_i(16)
+    when 'suggestive'
+      return '4B8EBA'.to_i(16)
+    when 'questionable'
+      return 'B03079'.to_i(16)
+    when 'explicit'
+      return 'C91E1E'.to_i(16)
+    when 'grimdark'
+      return '695B4F'.to_i(16)
+    when 'grotesque'
+      return 'B3641F'.to_i(16)
+    else
+      return 'D7D7D7'.to_i(16)
+    end
   end
 
   def self.censored?(img, adapter = 'discord')
