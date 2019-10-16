@@ -4,7 +4,7 @@ CommandDispatcher.register name: 'pony' do |msg, args|
   data = Booru.random_image args.raw, msg.channel.nsfw?
 
   if data
-    Image.embed message: msg, data: data, description: args.raw.present? ? nil : 'PONY PONY PONY'
+    Image.embed data, message: msg, description: args.raw.present? ? nil : 'PONY PONY PONY'
   else
     msg.reply with: 'No results for this query!', mention: false
   end

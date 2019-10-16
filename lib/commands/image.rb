@@ -11,7 +11,7 @@ class ChatImage
     data = Booru.image(id)
 
     if data
-      Image.embed message: msg, data: data
+      Image.embed data, message: msg
       return true
     end
   end

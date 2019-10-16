@@ -5,7 +5,7 @@ require 'json'
 require 'hashie'
 
 class Derpibooru
-  attr_accessor :sfw_filter, :nsfw_filter, :api_key
+  attr_accessor :sfw_filter, :nsfw_filter, :api_key, :hidden_tags
 
   def initialize(**args)
     @api_base     = args[:api_base] || 'https://derpibooru.org'
@@ -58,16 +58,6 @@ class Derpibooru
   end
 
   public
-
-  def self.rating(img)
-    match = img.tags.match /\b(grimdark|semi\-grimdark|safe|suggestive|questionable|explicit)\b/
-    match[1] || 'unknown'
-  end
-
-  def self.tag?(img, tag)
-    match = img.tags.match /\b(#{tag})\b/
-    match && match[1]
-  end
 
   def image(id)
     get url: "#{id}.json"
