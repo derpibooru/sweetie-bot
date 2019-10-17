@@ -28,7 +28,7 @@ class DiscordChannel < AbstractChannel
   end
 
   def nsfw?
-    @raw.nsfw? || [ :private, :group ].include?(@raw.channel_type)
+    @raw.nsfw? || [ :private, :group ].include?(@channel_type)
   end
 end
 
