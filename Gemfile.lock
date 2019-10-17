@@ -26,7 +26,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.1, >= 2.1.8)
-    cinch (2.3.4)
     concurrent-ruby (1.1.5)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -73,7 +72,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   activesupport
-  cinch
   discordrb!
   hashie
   relative_time

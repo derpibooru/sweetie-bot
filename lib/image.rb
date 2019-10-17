@@ -5,12 +5,14 @@ require 'relative_time'
 
 class Image
   def self.send_image(msg, id)
-    data = Booru.image(id)
+    img = Booru.image(id)
 
-    if data
-      embed data, message: msg
+    if img
+      embed img, message: msg
       return true
     end
+
+    false
   end
 
   def self.embed(img, **args)
@@ -24,52 +26,40 @@ class Image
     description = description.gsub(/(\r\n|\\r\\n|\\n)/, "\n")
     description = description.gsub(/\n\n\n/, "\n\n") while description.include?("\n\n\n")
 
-    if censored? img, message.adapter_name.to_s
-      if message.discord?
-        message.channel.send "Cannot display this image, it probably violates Discord's TOS, sorry!"
-      else
-        message.channel.send 'Cannot display this image due to my tag blacklist settings, sorry!'
-      end
-
+    if censored? img
+      message.channel.send "Cannot display this image, it probably violates Discord's TOS, sorry!"
       return false
     end
 
-    if message.discord?
-      embed_text = if img.spoilered
-        "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||http:#{img.representations.large}||"
-      else
-        ''
-      end
-
-      message.raw.send_embed embed_text do |embed|
-        embed.url = "https://derpibooru.org/#{img.id}"
-        embed.title = "#{img.id} (#{rating(img)})"
-        embed.description = description
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https:#{img.representations.full}")
-        embed.timestamp = time
-        embed.color = rating_color(rating(img))
-
-        tags = Discordrb::Webhooks::EmbedField.new
-        tags.name = 'Tags'
-        tags.value = img.tags.length < max_tags_len ? img.tags : "#{img.tags[0..max_tags_len]}..."
-
-        stats = Discordrb::Webhooks::EmbedField.new
-        stats.name = 'Statistics'
-        stats.value = <<~STATS
-          #{img.comment_count} comments posted, score is #{img.score} (#{img.upvotes} up, #{img.downvotes} down)
-        STATS
-
-        embed.fields = [
-          tags, stats
-        ]
-
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Uploaded #{nice_time} by #{img.uploader}.")
-      end
+    embed_text = if img.spoilered
+      "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||http:#{img.representations.large}||"
     else
-      message.channel.send "https://derpibooru.org/#{img.id} (#{rating(img)}) " \
-        "#{img.width}x#{img.height} (#{img.original_format}) " \
-        "uploaded by #{img.uploader} #{nice_time}.\n" \
-        "Tags: #{img.tags.length < max_tags_len ? img.tags : (img.tags[0..max_tags_len] + '...')}"
+      ''
+    end
+
+    message.send_embed embed_text do |embed|
+      embed.url = "https://derpibooru.org/#{img.id}"
+      embed.title = "#{img.id} (#{rating(img)})"
+      embed.description = description
+      embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https:#{img.representations.full}")
+      embed.timestamp = time
+      embed.color = rating_color(rating(img))
+
+      tags = Discordrb::Webhooks::EmbedField.new
+      tags.name = 'Tags'
+      tags.value = img.tags.length < max_tags_len ? img.tags : "#{img.tags[0..max_tags_len]}..."
+
+      stats = Discordrb::Webhooks::EmbedField.new
+      stats.name = 'Statistics'
+      stats.value = <<~STATS
+        #{img.comment_count} comments posted, score is #{img.score} (#{img.upvotes} up, #{img.downvotes} down)
+      STATS
+
+      embed.fields = [
+        tags, stats
+      ]
+
+      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Uploaded #{nice_time} by #{img.uploader}.")
     end
   end
 
@@ -102,8 +92,8 @@ class Image
     end
   end
 
-  def self.censored?(img, adapter = 'discord')
-    censored_tags = Booru.hidden_tags[adapter]
+  def self.censored?(img)
+    censored_tags = Booru.hidden_tags
     tags = img.tags
 
     censored_tags.each do |censor|

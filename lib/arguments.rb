@@ -35,4 +35,8 @@ class Arguments
 
     self
   end
+
+  def present?
+    @raw.present?
+  end
 end

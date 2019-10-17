@@ -5,7 +5,7 @@ require 'yaml'
 require 'hashie'
 
 require 'active_support'
-require 'adapters'
+require 'discord_adapter'
 require 'command_dispatcher'
 require 'derpibooru'
 require 'image'
@@ -56,23 +56,12 @@ class SweetieBot
     end
 
     @config.bots.each do |bot_id, bot_data|
-      conn = if bot_data.type == 'discord'
-        DiscordConnection.new(bot_data)
-      else
-        false
-      end
-
-      if !conn
-        SweetieBot.log "skipping connection '#{bot_id}' of unknown type (#{bot_data.type})"
-        next
-      end
+      conn = DiscordConnection.new(bot_data)
 
       conn.connection_id = bot_id
 
       conn.message do |msg|
-        if msg.discord?
-          next unless @config.discord.allowed_channel_types.include?(msg.channel.channel_type)
-        end
+        next unless @config.discord.allowed_channel_types.include?(msg.channel.channel_type)
 
         if @config.prefixes.include? msg.text[0]
           CommandDispatcher.handle msg

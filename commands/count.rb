@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 CommandDispatcher.register name: 'count' do |msg, args|
-  data = Booru.search args.raw, msg.channel.nsfw?
+  search_result = Booru.search args.raw, msg.channel.check_nsfw?
 
-  msg.reply with: "#{data.total} images match query '#{args.raw}'.", mention: false
+  msg.reply with: "**#{search_result.total}** images match query '_#{args.raw}_'.", mention: false
 end
 
 CommandDispatcher.alias 'c', 'count'

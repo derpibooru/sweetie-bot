@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 CommandDispatcher.register name: 'pony' do |msg, args|
-  data = Booru.random_image args.raw, msg.channel.nsfw?
+  img = Booru.random_image args.raw, msg.channel.check_nsfw?
 
-  if data
-    Image.embed data, message: msg, description: args.raw.present? ? nil : 'PONY PONY PONY'
+  if img
+    Image.embed img, message: msg, description: args.present? ? nil : 'PONY PONY PONY'
   else
-    msg.reply with: 'No results for this query!', mention: false
+    msg.reply with: '_No results for this query!_', mention: false
   end
 end
 

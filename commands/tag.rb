@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 CommandDispatcher.register name: 'tag' do |msg, args|
-  data = Booru.tag args.raw
+  tag_data = Booru.tag args.raw
+  tag = tag_data.tag
 
-  text = if msg.discord?
-    "<https://derpibooru.org/tags/#{data.tag.slug}> - #{data.tag.images} images are tagged '#{data.tag.name}'.\n"
-  else
-    "https://derpibooru.org/tags/#{data.tag.slug} - #{data.tag.images} images are tagged '#{data.tag.name}'.\n"
-  end
-
-  text += "#{data.tag.short_description}\n" if data.tag.short_description.present?
-  text += "Aliases: #{data.aliases.join(', ')}" unless data.aliases.empty?
-  text += "Implies: #{data.tag.implied_tags.join(', ')}" unless data.tag.implied_tags.empty?
+  text = "<https://derpibooru.org/tags/#{tag.slug}> - **#{tag.images}** images are tagged '_#{tag.name}_'.\n"
+  text += "#{tag.short_description}\n" if tag.short_description.present?
+  text += "**Aliases:** #{tag_data.aliases.join(', ')}\n" unless tag_data.aliases.empty?
+  text += "**Implies:** #{tag.implied_tags.join(', ')}" unless tag.implied_tags.empty?
 
   msg.reply with: text, mention: false
 end

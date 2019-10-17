@@ -31,15 +31,13 @@ booru:
   sfw_filter: 100073
   # Tags to hide, separated by adapter.
   hidden_tags:
-    discord:
-      # Arrays are considered as AND conditions.
-      # Use leading ! to indicate NOT.
-      - [ grimdark, torture ]
-      - [ grimdark, animal abuse]
-      - [ gore, grotesque ]
-      - [ foalcon, '!safe' ]
-      - kill yourself
-    irc:
+    # Arrays are considered as AND conditions.
+    # Use leading ! to indicate NOT.
+    - [ grimdark, torture ]
+    - [ grimdark, animal abuse]
+    - [ gore, grotesque ]
+    - [ foalcon, '!safe' ]
+    - kill yourself
 # Any bots not defined here will not be created.
 bots:
   # Example Discord configuration
@@ -54,5 +52,3 @@ bots:
     ignore_bots: true
     # Whether or not to display the bot's version under "Playing".
     display_version: true
-    # Adapter type (Discord in this case)
-    type: discord

@@ -12,8 +12,5 @@ gem 'activerecord'
 gem 'hashie'
 gem 'relative_time'
 
-# IRC
-gem 'cinch'
-
 # GitHub version seems to be less buggy
 gem 'discordrb', git: 'https://github.com/meew0/discordrb.git'
