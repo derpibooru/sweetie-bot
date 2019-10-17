@@ -25,7 +25,7 @@ class SweetieBot
   end
 
   def self.version
-    '0.2.1-alpha'
+    '0.2.2-alpha'
   end
 
   def self.codename
