@@ -53,5 +53,9 @@ bots:
     token: 'secret_token'
     # Account type. Valid values: :bot :user
     client_type: :bot
+    # Whether the bot should ignore it's own messages
+    ignore_self: true
+    # Whether or not should the bot ignore other bots.
+    ignore_bots: true
     # Adapter type (Discord in this case)
     type: discord
