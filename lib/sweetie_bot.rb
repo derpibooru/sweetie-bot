@@ -68,6 +68,10 @@ class SweetieBot
       conn.connection_id = bot_id
 
       conn.message do |msg|
+        if msg.discord?
+          next unless @config.discord.allowed_channel_types.include?(msg.channel.channel_type)
+        end
+
         if @config.prefixes.include? msg.text[0]
           CommandDispatcher.handle msg
         else

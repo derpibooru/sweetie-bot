@@ -9,6 +9,17 @@ messages:
 
   # Maximum allowed length of the image description before being cut off.
   max_desc_length: 256
+# Discord-specific configuration
+discord:
+  # What channel types should the bot respond to.
+  # Available values:
+  # :text
+  # :private
+  # :voice
+  # :group
+  allowed_channel_types:
+    - :text
+    - :private
 # Derpibooru-specific configuration.
 booru:
   # Base URL for API calls.
