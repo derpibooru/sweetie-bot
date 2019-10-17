@@ -21,6 +21,11 @@ class Image
     time = Time.parse(img.created_at)
     nice_time = RelativeTime.in_words(time)
     description = args[:description] || (img.description.length < max_desc_len ? img.description : "#{img.description[0..max_desc_len]}...")
+    description = description.gsub(/(\r\n|\\r\\n|\\n)/, "\n")
+
+    while description.include?("\n\n\n")
+      description = description.gsub /\n\n\n/, "\n\n"
+    end
 
     if censored? img, message.adapter_name.to_s
       if message.discord?
