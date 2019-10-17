@@ -25,11 +25,11 @@ class SweetieBot
   end
 
   def self.version
-    '0.2.2-alpha'
+    '0.3.0'
   end
 
   def self.codename
-    'I Want To Die'
+    'Am I Alive'
   end
 
   def self.instance
