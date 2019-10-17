@@ -11,14 +11,17 @@ messages:
   max_desc_length: 256
 # Derpibooru-specific configuration.
 booru:
+  # Base URL for API calls.
+  api_url: "https://derpibooru.org"
+
+  # Derpibooru API key to use.
+  api_key: ''
+
   # Filter to use in NSFW channels.
   nsfw_filter: 56027
 
   # Filter to use in SFW channels.
   sfw_filter: 100073
-
-  # Derpibooru API key to use.
-  key: ''
 
   # Tags to hide, separated by adapter.
   hidden_tags:
@@ -33,7 +36,6 @@ booru:
     irc:
 # Any bots not defined here will not be created.
 bots:
-  -
-    id: 'bot_id'
+  bot_id:
     token: 'secret_token'
     type: discord

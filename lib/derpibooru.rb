@@ -18,7 +18,8 @@ class Derpibooru
   def import_config(cfg)
     return if cfg.nil?
 
-    @api_key      = cfg['key'] || @api_key
+    @api_base     = cfg['api_url'] || @api_base
+    @api_key      = cfg['api_key'] || @api_key
     @sfw_filter   = cfg['sfw_filter'] || @sfw_filter
     @nsfw_filter  = cfg['nsfw_filter'] || @nsfw_filter
     @hidden_tags  = cfg['hidden_tags'] || @hidden_tags

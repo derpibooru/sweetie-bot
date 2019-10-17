@@ -2,6 +2,7 @@
 
 require 'optparse'
 require 'yaml'
+require 'hashie'
 
 require 'active_support'
 require 'adapters'
@@ -43,7 +44,9 @@ class SweetieBot
 
   def load_config(config_file)
     @config = YAML.load_file config_file
-    Booru.import_config @config['booru']
+    @config = Hashie::Mash.new(@config) if @config
+
+    Booru.import_config @config.booru
   end
 
   def run
@@ -52,12 +55,20 @@ class SweetieBot
       require file
     end
 
-    @config['bots'].each do |bot_data|
-      conn = DiscordConnection.new(bot_data)
-      conn.connection_id = bot_data['id']
+    @config.bots.each do |bot_id, bot_data|
+      conn = if bot_data.type == 'discord'
+        DiscordConnection.new(bot_data)
+      end
+
+      if !conn
+        SweetieBot.log "skipping connection '#{bot_id}' of unknown type (#{bot_data.type})"
+        next
+      end
+
+      conn.connection_id = bot_id
 
       conn.message do |msg|
-        if @config['prefixes'].include? msg.text[0]
+        if @config.prefixes.include? msg.text[0]
           CommandDispatcher.handle msg
         else
           @handlers.each do |handler|
