@@ -28,7 +28,7 @@ class DiscordChannel < AbstractChannel
   end
 
   def nsfw?
-    @raw.nsfw? || [ :private, :group ].include?(@channel_type)
+    @raw.nsfw? || [:private, :group].include?(@channel_type)
   end
 end
 
@@ -83,10 +83,12 @@ end
 class DiscordConnection < AbstractConnection
   def initialize(opts)
     @adapter_name = :discord
-    @raw = Discordrb::Bot.new token: opts.token,
-                              type: (opts.client_type || :bot),
-                              parse_self: !opts.ignore_self,
-                              ignore_bots: opts.ignore_bots
+    @raw = Discordrb::Bot.new(
+      token:       opts.token,
+      type:        (opts.client_type || :bot),
+      parse_self:  !opts.ignore_self,
+      ignore_bots: opts.ignore_bots
+    )
 
     @raw.ready do
       @raw.game = "Sweetie Bot v#{SweetieBot.version}" if opts.display_version

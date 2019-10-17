@@ -58,6 +58,8 @@ class SweetieBot
     @config.bots.each do |bot_id, bot_data|
       conn = if bot_data.type == 'discord'
         DiscordConnection.new(bot_data)
+      else
+        false
       end
 
       if !conn

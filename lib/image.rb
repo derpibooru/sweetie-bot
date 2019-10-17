@@ -22,10 +22,7 @@ class Image
     nice_time = RelativeTime.in_words(time)
     description = args[:description] || (img.description.length < max_desc_len ? img.description : "#{img.description[0..max_desc_len]}...")
     description = description.gsub(/(\r\n|\\r\\n|\\n)/, "\n")
-
-    while description.include?("\n\n\n")
-      description = description.gsub /\n\n\n/, "\n\n"
-    end
+    description = description.gsub(/\n\n\n/, "\n\n") while description.include?("\n\n\n")
 
     if censored? img, message.adapter_name.to_s
       if message.discord?
@@ -89,19 +86,19 @@ class Image
   def self.rating_color(rating)
     case rating
     when 'safe'
-      return '4BBA52'.to_i(16)
+      '4BBA52'.to_i(16)
     when 'suggestive'
-      return '4B8EBA'.to_i(16)
+      '4B8EBA'.to_i(16)
     when 'questionable'
-      return 'B03079'.to_i(16)
+      'B03079'.to_i(16)
     when 'explicit'
-      return 'C91E1E'.to_i(16)
+      'C91E1E'.to_i(16)
     when 'grimdark'
-      return '695B4F'.to_i(16)
+      '695B4F'.to_i(16)
     when 'grotesque'
-      return 'B3641F'.to_i(16)
+      'B3641F'.to_i(16)
     else
-      return 'D7D7D7'.to_i(16)
+      'D7D7D7'.to_i(16)
     end
   end
 
