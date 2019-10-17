@@ -29,7 +29,6 @@ booru:
   nsfw_filter: 56027
   # Filter to use in SFW channels.
   sfw_filter: 100073
-
   # Tags to hide, separated by adapter.
   hidden_tags:
     discord:
