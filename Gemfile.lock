@@ -1,3 +1,17 @@
+GIT
+  remote: https://github.com/meew0/discordrb.git
+  revision: 329045797fb2eb76275d47403eb08016458910e6
+  specs:
+    discordrb (3.3.0)
+      discordrb-webhooks (~> 3.3.0)
+      ffi (>= 1.9.24)
+      opus-ruby
+      rbnacl (~> 6.0)
+      rest-client (>= 2.1.0.rc1)
+      websocket-client-simple (>= 0.3.0)
+    discordrb-webhooks (3.3.0)
+      rest-client (>= 2.1.0.rc1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -14,15 +28,6 @@ GEM
       zeitwerk (~> 2.1, >= 2.1.8)
     cinch (2.3.4)
     concurrent-ruby (1.1.5)
-    discordrb (3.3.0)
-      discordrb-webhooks (~> 3.3.0)
-      ffi (>= 1.9.24)
-      opus-ruby
-      rbnacl (~> 3.4.0)
-      rest-client (>= 2.1.0.rc1)
-      websocket-client-simple (>= 0.3.0)
-    discordrb-webhooks (3.3.0)
-      rest-client (>= 2.1.0.rc1)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     event_emitter (0.2.6)
@@ -40,7 +45,7 @@ GEM
     netrc (0.11.0)
     opus-ruby (1.0.1)
       ffi
-    rbnacl (3.4.0)
+    rbnacl (6.0.1)
       ffi
     relative_time (1.1.0)
       i18n
@@ -69,7 +74,7 @@ DEPENDENCIES
   activerecord
   activesupport
   cinch
-  discordrb
+  discordrb!
   hashie
   relative_time
   sqlite3

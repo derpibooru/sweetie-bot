@@ -13,4 +13,6 @@ gem 'hashie'
 gem 'relative_time'
 
 gem 'cinch'     # irc
-gem 'discordrb' # discord
+
+# GitHub version seems to be less buggy
+gem 'discordrb', :git => 'https://github.com/meew0/discordrb.git'

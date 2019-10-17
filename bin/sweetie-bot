@@ -4,6 +4,10 @@
 $LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
 ENV['DISCORDRB_NONACL'] = 'true'
 
+# Required for custom git sources to work.
+require 'bundler'
+Bundler.setup
+
 require 'sweetie_bot'
 
 SweetieBot.main

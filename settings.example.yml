@@ -47,6 +47,11 @@ booru:
     irc:
 # Any bots not defined here will not be created.
 bots:
+  # Example Discord configuration
   bot_id:
+    # Account token
     token: 'secret_token'
+    # Account type. Valid values: :bot :user
+    client_type: :bot
+    # Adapter type (Discord in this case)
     type: discord

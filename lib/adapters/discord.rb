@@ -83,7 +83,7 @@ end
 class DiscordConnection < AbstractConnection
   def initialize(opts)
     @adapter_name = :discord
-    @raw = Discordrb::Bot.new token: opts['token']
+    @raw = Discordrb::Bot.new token: opts.token, type: (opts.client_type || :bot)
 
     @raw.ready do
       @raw.game = "Sweetie Bot v#{SweetieBot.version}"
