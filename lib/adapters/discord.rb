@@ -89,7 +89,7 @@ class DiscordConnection < AbstractConnection
                               ignore_bots: opts.ignore_bots
 
     @raw.ready do
-      @raw.game = "Sweetie Bot v#{SweetieBot.version}"
+      @raw.game = "Sweetie Bot v#{SweetieBot.version}" if opts.display_version
     end
   end
 

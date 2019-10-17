@@ -52,5 +52,7 @@ bots:
     ignore_self: true
     # Whether or not should the bot ignore other bots.
     ignore_bots: true
+    # Whether or not to display the bot's version under "Playing".
+    display_version: true
     # Adapter type (Discord in this case)
     type: discord
