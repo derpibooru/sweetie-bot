@@ -10,13 +10,7 @@ class Quote < ActiveRecord::Base
   end
 
   def self.add(user, channel, body)
-    q = Quote.new
-    q.user = user
-    q.channel = channel
-    q.body = body.strip
-    q.save!
-
-    q
+    Quote.create! user: user, channel: channel, body: body.strip
   end
 
   def self.remove(user, id)
@@ -24,7 +18,7 @@ class Quote < ActiveRecord::Base
 
     raise InvalidID, 'ID out of range' if id.to_i <= 0 || user_quotes.count < id
 
-    if (q = user_quotes.order(created_at: :asc).offset(id - 1).limit(1))
+    if (q = user_quotes.order(created_at: :asc).offset(id - 1).first)
       q.destroy!
     else
       raise NotFound, 'quote not found'
