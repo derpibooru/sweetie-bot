@@ -1,48 +1,33 @@
 # frozen_string_literal: true
 
 class Quote < ActiveRecord::Base
-  class NotFound < StandardError
-  end
+  validates :body, uniqueness: { scope: [:user, :channel], message: 'quote already exists' }
 
-  class AlreadyExists < StandardError
+  class NotFound < StandardError
   end
 
   class InvalidID < StandardError
   end
 
   def self.add(user, channel, body)
-    q = nil
-
-    Quote.with_lock do
-      if Quote.where(user: user, channel: channel, body: body).exists?
-        raise AlreadyExists.new 'quote already exists'
-      end
-
-      q = Quote.new
-      q.user = user
-      q.channel = channel
-      q.body = body
-      q.save!
-    end
+    q = Quote.new
+    q.user = user
+    q.channel = channel
+    q.body = body.strip
+    q.save!
 
     q
   end
 
   def self.remove(user, id)
-    Quote.with_lock do
-      user_quotes = Quote.where user: user
+    user_quotes = Quote.where user: user
 
-      if id.to_i <= 0 || user_quotes.count < id
-        raise InvalidID.new 'ID out of range'
-      end
+    raise InvalidID, 'ID out of range' if id.to_i <= 0 || user_quotes.count < id
 
-      q = user_quotes.order(created_at: :asc).offset(id - 1).limit(1)
-
-      if q
-        q.destroy!
-      else
-        raise NotFound.new 'quote not found'
-      end
+    if (q = user_quotes.order(created_at: :asc).offset(id - 1).limit(1))
+      q.destroy!
+    else
+      raise NotFound, 'quote not found'
     end
   end
 end

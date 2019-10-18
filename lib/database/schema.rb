@@ -8,5 +8,9 @@ ActiveRecord::Schema.define do
       t.text :body
       t.timestamps
     end
+
+    add_index :quotes, [:body, :user, :channel], unique: true
+    add_index :quotes, :user
+    add_index :quotes, :channel
   end
 end
