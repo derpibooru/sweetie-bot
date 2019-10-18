@@ -3,7 +3,7 @@
 SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase
 
-  if lower.match?(/^(the|this)?\s*bot\b/) ||
+  if lower.match?(/^(the|this)?\s*bot\b/i) ||
      lower.include?('sweetie')            ||
      lower.include?('derpi bot')          ||
      lower.include?('derpibooru bot')
