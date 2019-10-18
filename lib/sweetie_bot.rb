@@ -72,6 +72,12 @@ class SweetieBot
         end
       end
 
+      conn.mention do |msg|
+        next if msg.content.match? /^(\.|\!)quote\b/
+
+        msg.send_message "#{msg.message.author.mention}, please type `.help` if you would like to learn more about my functions!"
+      end
+
       @connections.push conn
       conn.connect
     end

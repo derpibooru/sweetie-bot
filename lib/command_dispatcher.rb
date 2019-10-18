@@ -15,22 +15,22 @@ class CommandDispatcher
     @commands ||= {}
 
     @commands[opts[:name]] = {
-      data:     opts,
-      callback: proc do |msg, args|
+      data:      opts,
+      callback:  proc do |msg, args|
         if args
           yield msg, args
         else
           msg.reply with: 'unclosed string'
         end
       end,
-      name: opts[:name],
+      name:      opts[:name],
       help_text: opts[:help_text],
-      aliases: []
+      aliases:   []
     }
   end
 
   def self.help
-    @commands.flat_map do |name, data|
+    @commands.flat_map do |_, data|
       if data[:help_text] && data[:alias].nil?
         data
       else
@@ -44,11 +44,11 @@ class CommandDispatcher
 
     if target_cmd
       @commands[what] ||= {
-        name: target_cmd[:name],
+        name:      target_cmd[:name],
         help_text: target_cmd[:help_text],
-        data: target_cmd[:data],
-        callback: target_cmd[:callback],
-        alias: true
+        data:      target_cmd[:data],
+        callback:  target_cmd[:callback],
+        alias:     true
       }
 
       @commands[into][:aliases].push what

@@ -91,4 +91,12 @@ class DiscordConnection
       yield event
     end
   end
+
+  def mention
+    raise 'Discord not connected!' unless @raw
+
+    @raw.mention do |event|
+      yield event
+    end
+  end
 end
