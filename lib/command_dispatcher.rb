@@ -22,12 +22,37 @@ class CommandDispatcher
         else
           msg.reply with: 'unclosed string'
         end
-      end
+      end,
+      name: opts[:name],
+      help_text: opts[:help_text],
+      aliases: []
     }
   end
 
+  def self.help
+    @commands.flat_map do |name, data|
+      if data[:help_text] && data[:alias].nil?
+        data
+      else
+        []
+      end
+    end
+  end
+
   def self.alias(what, into)
-    @commands[what] ||= @commands[into]
+    target_cmd = @commands[into]
+
+    if target_cmd
+      @commands[what] ||= {
+        name: target_cmd[:name],
+        help_text: target_cmd[:help_text],
+        data: target_cmd[:data],
+        callback: target_cmd[:callback],
+        alias: true
+      }
+
+      @commands[into][:aliases].push what
+    end
   end
 
   def self.parse_arguments(str)

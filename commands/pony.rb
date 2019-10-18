@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-CommandDispatcher.register name: 'pony' do |msg, args|
+CommandDispatcher.register name: 'pony', help_text: 'displays a random image matching the search query' do |msg, args|
   img = Booru.random_image args.raw, msg.channel.check_nsfw?
 
   if img

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-CommandDispatcher.register name: 'tag' do |msg, args|
+CommandDispatcher.register name: 'tag', help_text: 'displays information about a tag' do |msg, args|
   tag_data = Booru.tag args.raw
   tag = tag_data.tag
 

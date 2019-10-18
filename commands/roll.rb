@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-CommandDispatcher.register name: 'roll' do |msg, args|
+CommandDispatcher.register name: 'roll', help_text: 'generates a random number' do |msg, args|
   ceil = args.raw.to_i if args.present?
   ceil ||= 24
 

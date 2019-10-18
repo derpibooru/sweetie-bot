@@ -3,7 +3,7 @@
 require 'net/http'
 require 'json'
 
-CommandDispatcher.register name: 'printerfact' do |msg, _|
+CommandDispatcher.register name: 'printerfact', help_text: 'displays a random fact about printers' do |msg, _|
   res = Net::HTTP.get_response(URI('https://catfact.ninja/fact'))
 
   return false unless res
