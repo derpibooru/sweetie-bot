@@ -67,7 +67,7 @@ class CommandDispatcher
 
     # Run the command if exists, ignore otherwise
     if real_command
-      SweetieBot.log "#{command} (#{remainder}) from #{msg.sender.username}"
+      SweetieBot.log "#{command} #{!remainder.empty? ? ('(' + remainder + ') ') : ''}from #{msg.sender.username}"
       real_command[:callback].call(msg, parse_arguments(remainder))
     end
   end
