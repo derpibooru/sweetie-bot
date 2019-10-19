@@ -25,11 +25,11 @@ class SweetieBot
   end
 
   def self.version
-    '0.3.1'
+    '0.4.0'
   end
 
   def self.codename
-    'Am I Alive'
+    'Parrot'
   end
 
   def self.instance

@@ -18,6 +18,10 @@ class Discordrb::Channel
     end
   end
 
+  def mention
+    "<##{id}>"
+  end
+
   def send(*opts)
     send_message opts[0]
   end
