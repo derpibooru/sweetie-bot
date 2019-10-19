@@ -10,7 +10,7 @@ CommandDispatcher.register name: 'quotes', help_text: 'displays the amount of qu
   end
 
   begin
-    _, _, count = Quote.search field: field, value: subject, id: quote_id
+    _, _, count = Quote.search field: field, value: subject, id: 1
     msg.reply "#{subject} has **#{count}** quote#{count != 1 ? 's' : ''} on record."
   rescue StandardError => ex
     msg.reply ex.message
