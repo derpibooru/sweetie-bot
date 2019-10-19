@@ -5,7 +5,7 @@ CommandDispatcher.register name: 'del_quote', help_text: '(admin) deletes a spec
   field = Quote.subject_type subject
   quote_id = args.parsed[1] ? args.parsed[1].to_i : false
 
-  next if !field
+  next if !field || field == :id
   next if !quote_id
   next if !User.admin?(msg.sender.id)
 

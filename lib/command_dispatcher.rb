@@ -61,6 +61,9 @@ class CommandDispatcher
 
   def self.handle(msg)
     match = msg.text.match /.([\w_]+)\s*(.*)/
+
+    return unless match
+
     command = match[1].downcase
     remainder = match[2]
     real_command = @commands[command]

@@ -5,7 +5,7 @@ CommandDispatcher.register name: 'add_quote', help_text: 'adds a quote from a us
   field = Quote.subject_type subject
   text = args.parsed[1..].join(' ')
 
-  unless field
+  unless field && field != :id
     msg.reply 'invalid subject, try a user or a channel.'
     next
   end

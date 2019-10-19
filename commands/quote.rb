@@ -2,7 +2,7 @@
 
 CommandDispatcher.register name: 'quote', help_text: 'displays a quote from a user or channel' do |msg, args|
   subject = args.parsed[0]
-  field = Quote.subject_type subject
+  field = Quote.subject_type(subject) || (subject.nil? ? :id : false)
   quote_id = args.parsed[1] ? args.parsed[1].to_i : false
 
   if !field
@@ -17,8 +17,25 @@ CommandDispatcher.register name: 'quote', help_text: 'displays a quote from a us
   end
 
   begin
-    quote, quote_id, count = Quote.search field: field, value: subject, id: quote_id
-    msg.reply "(#{quote_id} / #{count}) #{quote.user}: #{quote.body}", mention: false
+    quote, qid, count = nil
+
+    if field != :id
+      quote, qid, count = Quote.search field: field, value: subject, id: quote_id
+    else
+      quote_count = Quote.all.count
+      quote_id = if subject.nil?
+        rand(1..quote_count)
+      else
+        subject.to_i
+      end
+
+      raise 'ID out of range.' if quote_id <= 0 || quote_id > quote_count
+
+      quote = Quote.find_by_id(quote_id)
+      quote, qid, count = quote, quote.id, quote_count
+    end
+
+    msg.reply "(#{qid} / #{count}) #{quote.user}: #{quote.body}", mention: false
   rescue StandardError => ex
     msg.reply ex.message
   end

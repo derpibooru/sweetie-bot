@@ -41,7 +41,11 @@ class Quote < ActiveRecord::Base
     when '<#'
       :channel
     else
-      false
+      if subject.match? /^[0-9]+$/
+        :id
+      else
+        false
+      end
     end
   end
 end
