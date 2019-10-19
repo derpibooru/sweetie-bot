@@ -1,2 +1,4 @@
+.yardoc/*
+doc/*
 settings.yml
 bot.db
