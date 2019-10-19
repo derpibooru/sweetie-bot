@@ -50,7 +50,7 @@ class Derpibooru
     uri = URI "#{@api_base}/#{args[:url]}"
 
     uri.query = args[:query].to_s               if args[:query]
-    uri.query = "#{uri.query}&key=#{@api_key}"  if @api_key
+    uri.query = "#{uri.query}&key=#{@api_key}"  if @api_key.present?
     uri.query = "#{uri.query}#{uri.query.present? ? '&' : ''}filter_id=#{args[:nsfw] ? @nsfw_filter : @sfw_filter}"
 
     response = Net::HTTP.get_response uri
@@ -60,12 +60,12 @@ class Derpibooru
 
   public
 
-  def image(id)
-    get url: "#{id}.json"
+  def image(id, nsfw = false)
+    get url: "#{id}.json", nsfw: nsfw
   end
 
   def tag(t)
-    get url: "/tags/#{generate_slug(t)}.json"
+    get url: "/tags/#{generate_slug(t)}.json", nsfw: true
   end
 
   def search(query, nsfw = false)
@@ -74,6 +74,6 @@ class Derpibooru
 
   def random_image(query = 'safe, cute', nsfw = false)
     img = get(url: 'search.json', query: "q=#{query.present? ? query : 'safe, cute'}&random_image=1", nsfw: nsfw)
-    image img.id if img
+    image img.id, nsfw if img
   end
 end
