@@ -74,7 +74,7 @@ class SweetieBot
 
       conn.mention do |msg|
         next if msg.content.match? /^(\.|\!)(a|d|add_|del_|delete_|remove_|count_)q(uote|s|uotes|uote_count)?\b/
-        next if msg.content.include? 'a call'
+        next unless msg.content.present?
 
         msg.send_message "#{msg.message.author.mention}, please type `.help` if you would like to learn more about my functions!"
       end
