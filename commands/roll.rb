@@ -6,3 +6,5 @@ CommandDispatcher.register name: 'roll', help_text: 'generates a random number' 
 
   msg.reply with: "#{msg.sender.mention} has rolled **#{rand(ceil)}** out of **#{ceil}**.", mention: false
 end
+
+CommandDispatcher.alias 'r', 'roll'

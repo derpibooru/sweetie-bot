@@ -24,7 +24,7 @@ CommandDispatcher.register name: 'help', help_text: 'displays this help message'
   text += '```'
 
   msg.sender.pm text
-  msg.reply 'documentation sent, please check your DMs!'
+  msg.reply 'documentation sent, please check your DMs!' unless msg.channel.channel_type == :private
 end
 
 CommandDispatcher.alias 'h', 'help'

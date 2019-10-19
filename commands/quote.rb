@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-CommandDispatcher.register name: 'quote' do |msg, args|
+CommandDispatcher.register name: 'quote', help_text: 'displays a quote from a user or channel' do |msg, args|
   subject = args.parsed[0]
   field = Quote.subject_type subject
   quote_id = args.parsed[1] ? args.parsed[1].to_i : false

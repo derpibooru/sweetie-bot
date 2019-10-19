@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-CommandDispatcher.register name: 'del_quote' do |msg, args|
+CommandDispatcher.register name: 'del_quote', help_text: '(admin) deletes a specific quote' do |msg, args|
   subject = args.parsed[0]
   field = Quote.subject_type subject
   quote_id = args.parsed[1] ? args.parsed[1].to_i : false

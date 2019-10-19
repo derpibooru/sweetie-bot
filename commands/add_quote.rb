@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-CommandDispatcher.register name: 'add_quote' do |msg, args|
+CommandDispatcher.register name: 'add_quote', help_text: 'adds a quote from a user or a channel' do |msg, args|
   subject = args.parsed[0]
   field = Quote.subject_type subject
   text = args.parsed[1..].join(' ')

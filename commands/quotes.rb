@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-CommandDispatcher.register name: 'quotes' do |msg, args|
+CommandDispatcher.register name: 'quotes', help_text: 'displays the amount of quotes related to a user or a channel' do |msg, args|
   subject = args.parsed[0]
   field = Quote.subject_type subject
 
