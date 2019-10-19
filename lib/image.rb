@@ -5,7 +5,7 @@ require 'relative_time'
 
 class Image
   def self.send_image(msg, id)
-    img = Booru.image(id)
+    img = Booru.image(id, msg.channel.check_nsfw?)
 
     if img
       embed img, message: msg
