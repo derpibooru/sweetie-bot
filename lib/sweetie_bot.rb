@@ -73,8 +73,10 @@ class SweetieBot
       end
 
       conn.mention do |msg|
+        next unless @config.discord.allowed_channel_types.include?(msg.channel.channel_type)
         next if msg.content.match? /^(\.|\!)(a|d|add_|del_|delete_|remove_|count_)?q(uote|s|uotes|uote_count)?\b/
         next unless msg.content.present?
+        next if bot_data.client_type == :user
 
         msg.send_message "#{msg.message.author.mention}, please type `.help` if you would like to learn more about my functions!"
       end
