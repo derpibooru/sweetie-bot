@@ -32,7 +32,8 @@ CommandDispatcher.register name: 'quote', help_text: 'displays a quote from a us
       raise 'ID out of range.' if quote_id <= 0 || quote_id > quote_count
 
       quote = Quote.all.offset(quote_id - 1).order(created_at: :asc).first
-      quote, qid, count = quote, quote_id, quote_count
+      qid = quote_id
+      count = quote_count
     end
 
     msg.reply "(#{qid} / #{count}) #{quote.user}: #{quote.body}", mention: false
