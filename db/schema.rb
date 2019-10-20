@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_20_161226) do
+ActiveRecord::Schema.define(version: 2019_10_20_192316) do
 
   create_table "quotes", force: :cascade do |t|
     t.string "user"
@@ -18,14 +18,14 @@ ActiveRecord::Schema.define(version: 2019_10_20_161226) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["body", "user", "channel"], name: "index_quotes_on_body_and_user_and_channel", unique: true
+    t.index ["body", "user"], name: "index_quotes_on_body_and_user", unique: true
     t.index ["channel"], name: "index_quotes_on_channel"
     t.index ["user"], name: "index_quotes_on_user"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.boolean "admin", default: false
+    t.boolean "admin"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["admin"], name: "index_users_on_admin"

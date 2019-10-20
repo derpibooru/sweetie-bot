@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __dir__)
-$LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/lib"
+ENV['DISCORDRB_NONACL'] = 'true'
 
 require 'bundler'
 Bundler.setup
 
 require 'active_record'
+require 'sweetie_bot'
 
 namespace :db do
   db_config = YAML.safe_load(File.open('config/database.yml'))
@@ -21,7 +22,12 @@ namespace :db do
   desc 'Migrate the database'
   task :migrate do
     ActiveRecord::Base.establish_connection(db_config)
-    ActiveRecord::Base.connection.migration_context.migrate
+    ActiveRecord::Tasks::DatabaseTasks.check_target_version
+
+    ActiveRecord::Base.connection.migration_context.run(
+      :up,
+      ActiveRecord::Tasks::DatabaseTasks.target_version
+    )
     Rake::Task['db:schema'].invoke
     puts 'Database migrated.'
   end

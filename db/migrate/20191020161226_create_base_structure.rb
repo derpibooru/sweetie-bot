@@ -21,7 +21,7 @@ class CreateBaseStructure < ActiveRecord::Migration[6.0]
   end
 
   def down
-    remove_index :quotes, column: [:body, :user]
+    remove_index :quotes, column: [:body, :user, :channel]
     remove_index :quotes, column: :user
     remove_index :quotes, column: :channel
     remove_index :users, column: :name
