@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'irb'
+
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+ENV['DISCORDRB_NONACL'] = 'true'
+
+puts 'Loading Bot Console (IRB)...'
+
+# Required for custom git sources to work.
+require 'bundler'
+Bundler.setup
+
+require 'sweetie_bot'
+IRB.start

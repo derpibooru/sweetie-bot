@@ -11,7 +11,7 @@ class Quote < ActiveRecord::Base
   # @param body [String] the text of the quote.
   # @return [Quote] the newly created quote.
   def self.add(user, channel, body)
-    Quote.create! user: user, channel: channel, body: body.strip
+    Quote.create! user: user.gsub(/^<@!/, '<@'), channel: channel, body: body.strip
   end
 
   # Searches for a quote based on the search parameters.
@@ -23,7 +23,7 @@ class Quote < ActiveRecord::Base
   # @return [Number] ID of the quote, not using the `#id` parameter, but rather it's actual position in the database.
   # @return [Number] total amount of matching quotes found.
   def self.search(**args)
-    quotes = Quote.where args[:field] => args[:value]
+    quotes = Quote.where args[:field] => args[:value].gsub(/^<@!/, '<@')
     quote_count = quotes.count
 
     raise 'no quotes on record.' if quote_count < 1
@@ -45,7 +45,7 @@ class Quote < ActiveRecord::Base
   # @param user [String] full Discord User ID (`<@123456...>`) of the user the quote belongs to.
   # @param id [Number] ID of the quote to remove.
   def self.remove(user, id)
-    search(field: :user, value: user, id: id)[0].destroy
+    search(field: :user, value: user.gsub(/^<@!/, '<@'), id: id)[0].destroy
   end
 
   # Removes a quote made in a specific channel by it's position.
