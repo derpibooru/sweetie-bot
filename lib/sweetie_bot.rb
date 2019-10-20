@@ -9,7 +9,7 @@ require 'discord_adapter'
 require 'command_dispatcher'
 require 'derpibooru'
 require 'image'
-require 'database/database'
+require 'database'
 
 ::Booru = Derpibooru.new
 

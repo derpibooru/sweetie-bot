@@ -7,5 +7,3 @@ ActiveRecord::Base.establish_connection YAML.safe_load(File.open('config/databas
 Dir['./models/**/*.rb'].each do |f|
   require f
 end
-
-require 'database/schema'
