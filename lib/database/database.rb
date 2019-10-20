@@ -2,7 +2,7 @@
 
 require 'active_record'
 
-ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: 'bot.db'
+ActiveRecord::Base.establish_connection YAML.safe_load(File.open('config/database.yml'))
 
 Dir['./models/**/*.rb'].each do |f|
   require f

@@ -2,7 +2,10 @@
 
 # Quotes model. Responsible for creating and removing quotes.
 class Quote < ActiveRecord::Base
-  validates :body, uniqueness: { scope: [:user, :channel], message: 'quote already exists' }
+  validates :body, uniqueness: { scope: :user, message: 'quote already exists' }
+  validates :body, presence: true
+  validates :user, presence: true
+  validates :channel, presence: true
 
   # Adds a new quote.
   #

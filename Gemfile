@@ -2,7 +2,11 @@
 
 source 'https://rubygems.org'
 
+# Database stuff
 gem 'sqlite3'
+
+# Migrations and co
+gem 'rake'
 
 # Quotes and co
 gem 'activesupport'

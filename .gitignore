@@ -1,4 +1,6 @@
 .yardoc/*
 doc/*
-settings.yml
-bot.db
+tmp/*
+config/settings.yml
+config/database.yml
+db/*.db

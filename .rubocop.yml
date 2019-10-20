@@ -36,6 +36,8 @@ Style/GuardClause:
 
 AllCops:
   TargetRubyVersion: 2.6
+  Exclude:
+    - 'db/**/*.rb'
 
 # This is utterly retarded.
 Bundler/OrderedGems:

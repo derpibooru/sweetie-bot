@@ -25,11 +25,11 @@ class SweetieBot
   end
 
   def self.version
-    '0.4.4'
+    '0.5.0'
   end
 
   def self.codename
-    'Parrot'
+    'Drunk Nomad'
   end
 
   def self.instance
@@ -133,11 +133,11 @@ class SweetieBot
     opt_parser.parse!
 
     if @@instance.config.nil?
-      log "No config file specified, using 'settings.yml'"
+      log "No config file specified, using 'config/settings.yml'"
 
-      @@instance.load_config 'settings.yml'
+      @@instance.load_config 'config/settings.yml'
 
-      exit if @@instance.config.nil?
+      exit 1 if @@instance.config.nil?
     end
 
     Signal.trap 'INT' do
