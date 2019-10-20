@@ -5,7 +5,7 @@ require 'benchmark'
 CommandDispatcher.register name: 'help', help_text: 'displays this help message' do |msg, _|
   text = "**Usage:**\n"
 
-  SweetieBot.instance.config.prefixes.each do |prefix|
+  SweetieBot.config.prefixes.each do |prefix|
     text += "**#{prefix}**_command <arguments>_\n"
   end
 

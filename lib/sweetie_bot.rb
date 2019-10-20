@@ -25,7 +25,7 @@ class SweetieBot
   end
 
   def self.version
-    '0.4.3'
+    '0.4.4'
   end
 
   def self.codename
@@ -34,6 +34,10 @@ class SweetieBot
 
   def self.instance
     @@instance
+  end
+
+  def self.config
+    @@instance.config
   end
 
   def handler

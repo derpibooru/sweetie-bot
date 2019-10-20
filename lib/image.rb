@@ -16,8 +16,8 @@ class Image
   end
 
   def self.embed(img, **args)
-    max_desc_len = SweetieBot.instance.config.messages.max_desc_length
-    max_tags_len = SweetieBot.instance.config.messages.max_tag_length
+    max_desc_len = SweetieBot.config.messages.max_desc_length
+    max_tags_len = SweetieBot.config.messages.max_tag_length
 
     message = args[:message] || args[:msg]
     time = Time.parse(img.created_at)

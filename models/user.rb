@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   # @param usr_id [Number] Discord User ID.
   # @return [Boolean] whether the user is admin or not.
   def self.admin?(usr_id)
-    User::FORCED_ADMIN_IDS.include? usr_id.to_s
+    return true if User::FORCED_ADMIN_IDS.include? usr_id.to_s
+    return true if SweetieBot.config.discord.administrators.include? usr_id.to_i
+    false
   end
 end
