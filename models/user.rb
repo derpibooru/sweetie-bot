@@ -2,6 +2,7 @@
 
 # User data class used only to check if a user is admin or not
 # @note May be used for other features later down the line.
+# @author Luna aka Meow the Cat
 class User < ActiveRecord::Base
   validates :name, presence: true
 

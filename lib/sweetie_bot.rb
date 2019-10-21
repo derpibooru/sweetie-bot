@@ -11,11 +11,21 @@ require 'derpibooru'
 require 'image'
 require 'database'
 
+# API object for easy access and configuration.
 ::Booru = Derpibooru.new
 
+# The main class responsible for the bot.
+# @author Luna aka Meow the Cat
+# @note Can hold multiple bot instances.
+# @note It's not advised or supported to instantiate this class more than once.
+# @attr [Hash] config The loaded configuration of the current bot instance.
+# @attr [Array<DiscordConnection>] connections The established bot connections.
+# @attr [Boolean] should_stop Whether the bot should be gracefully killed or not.
+# @attr [SweetieBot] instance The currently running instance of the bot wrapper.
 class SweetieBot
   attr_accessor :config, :connections, :should_stop, :instance
 
+  # The current running instance of SweetieBot class.
   @@instance = nil
 
   def initialize
@@ -24,28 +34,41 @@ class SweetieBot
     @handlers = []
   end
 
+  # Current version of the bot
+  # @return [String] version string in X.X.X-suffix format.
   def self.version
     '0.5.0'
   end
 
+  # Current version's codename.
+  # @return [String] codename of the current major (x.X.x) release.
   def self.codename
     'Drunk Nomad'
   end
 
+  # Getter for the current running instance of SweetieBot.
+  # @return [SweetieBot] current instance.
   def self.instance
     @@instance
   end
 
+  # Getter for the current instance's configuration (settings.yml).
+  # @return [Hash] configuration values as defined in the YAML file.
   def self.config
     @@instance.config
   end
 
+  # Adds a custom message handler, which isn't necessarily a command.
+  # @yield [msg] callback to be called when a message is sent.
+  # @yieldparam [Discordrb::Events::MessageEvent] msg message event.
   def handler
     @handlers.push proc do |msg|
       yield msg
     end
   end
 
+  # Loads a configuration from a YAML file.
+  # @param config_file [String] path to the YAML file on the filesystem.
   def load_config(config_file)
     @config = YAML.load_file config_file
     @config = Hashie::Mash.new(@config) if @config
@@ -53,6 +76,8 @@ class SweetieBot
     Booru.import_config @config.booru
   end
 
+  # Runs the bot using the current configuration.
+  # @note Config MUST be loaded beforehand!
   def run
     # Include all handlers now.
     Dir['./handlers/*.rb'].each do |file|
@@ -103,6 +128,8 @@ class SweetieBot
     end
   end
 
+  # Gracefully stops and disconnects all the bot instances.
+  # @note Must be connected before disconnecting.
   def stop!
     @connections.each do |connection|
       puts "  -> stopping '#{connection.connection_id}'"
@@ -112,6 +139,11 @@ class SweetieBot
     SweetieBot.log 'Stopped.'
   end
 
+  # Loads configuration and starts the bot.
+  # Reads commandline params to determine config paths.
+  #   # Options:
+  #   # -c --config-file NAME
+  #   # -h --help
   def self.main
     log "Derpibooru Sweetie Bot v#{version} (#{codename})"
 
@@ -153,6 +185,8 @@ class SweetieBot
     @@instance.run
   end
 
+  # Creates a stdout log entry with current time and date.
+  # @param msg [String] message to output.
   def self.log(msg)
     puts "#{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')} - #{msg}"
   end

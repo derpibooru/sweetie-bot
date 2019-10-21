@@ -2,9 +2,20 @@
 
 require 'arguments'
 
+# Handles the commands that are entered in chat, as well as registering of the new commands.
+# @author Luna aka Meow the Cat
+# @attr [Hash] commands All available commands and aliases.
 class CommandDispatcher
   attr_accessor :commands
 
+  # Registers a new command.
+  # @param opts [Hash] command options.
+  # @option opts [String] :name the name of the command.
+  # @option opts [String] :help_text the text to display in the `help` command.
+  #   If left blank, will not show up in the help command.
+  # @yield [msg, args] The command callback.
+  # @yieldparam [Discordrb::Events::MessageEvent] msg The message that triggered the command.
+  # @yieldparam [Arguments] args The arguments by the user.
   def self.register(*opts)
     opts = opts[0]
 
@@ -29,6 +40,9 @@ class CommandDispatcher
     }
   end
 
+  # Generates the array of commands for use by the help command.
+  # @note Only includes actual commands, won't include aliases.
+  # @return [Array<Hash>] the array of commands.
   def self.help
     @commands.flat_map do |_, data|
       if data[:help_text] && data[:alias].nil?
@@ -39,6 +53,9 @@ class CommandDispatcher
     end
   end
 
+  # Creates an alias for a given command.
+  # @param what [String] the alias name.
+  # @param into [String] the command to run when the alias is triggered.
   def self.alias(what, into)
     target_cmd = @commands[into]
 
@@ -55,10 +72,17 @@ class CommandDispatcher
     end
   end
 
+  # Parses the arguments string.
+  # @param str [String] the arguments string.
+  # @return [Arguments] parsed arguments.
   def self.parse_arguments(str)
     Arguments.new.parse(str)
   end
 
+  # Handles the message as a command. Expects the message to be a command.
+  # Separates the command from the arguments and parses the arguments before
+  # calling the command callback.
+  # @param msg [Discordrb::Events::MessageEvent] the message event.
   def self.handle(msg)
     match = msg.text.match /.([\w_]+)\s*(.*)/
 

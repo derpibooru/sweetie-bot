@@ -64,6 +64,10 @@ class Discordrb::Events::MessageEvent
   end
 end
 
+# A container for a Discord connection.
+# @author Luna aka Meow the Cat
+# @attr [Discordrb::Bot] raw The raw bot object.
+# @attr [String] connection_id The ID of the connection as defined in the YAML file.
 class DiscordConnection
   attr_accessor :raw, :connection_id
 

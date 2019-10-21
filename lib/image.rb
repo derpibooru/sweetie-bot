@@ -3,7 +3,13 @@
 require 'active_support/core_ext'
 require 'relative_time'
 
+# A class responsible for handling booru image-related things.
+# @author Luna aka Meow the Cat
 class Image
+  # Sends an image as a reply to the message.
+  # @param msg [Discordrb::Events::MessageEvent] message object.
+  # @param id [Number] ID of the image.
+  # @return [true, false] `true` if the image was found, `false` otherwise.
   def self.send_image(msg, id)
     img = Booru.image(id, msg.channel.check_nsfw?)
 
@@ -15,6 +21,12 @@ class Image
     false
   end
 
+  # Sends an image as an embed, replying to a message.
+  # @param img [Number] ID of the image.
+  # @param args [Hash] options for the embed.
+  # @option args [Discordrb::Events::MessageEvent] :message The message object
+  # @option args [String] :description Description of the image to send.
+  # @return [false] `false` if the image is censored by the YAML filters.
   def self.embed(img, **args)
     max_desc_len = SweetieBot.config.messages.max_desc_length
     max_tags_len = SweetieBot.config.messages.max_tag_length
@@ -32,7 +44,7 @@ class Image
     end
 
     embed_text = if img.spoilered
-      "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||http:#{img.representations.large}||"
+      "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||https:#{img.representations.large}||"
     else
       ''
     end
@@ -63,16 +75,26 @@ class Image
     end
   end
 
+  # Reads the content rating tag of the image.
+  # @param img [Hash] Image data.
+  # @return [String] Rating tag, or "unknown" if none are present.
   def self.rating(img)
     match = img.tags.match /\b(grimdark|semi\-grimdark|grotesque|safe|suggestive|questionable|explicit)\b/
     match[1] || 'unknown'
   end
 
+  # Determines whether an image has certain tag or not.
+  # @param img [Hash] image data.
+  # @param tag [String] tag to search for.
+  # @return [Boolean] whether the tag is present or not.
   def self.tag?(img, tag)
     match = img.tags.match /\b(#{tag})\b/
     match && match[1]
   end
 
+  # Returns the color based on rating, in Discord's number notation.
+  # @param rating [String] rating tag.
+  # @return [Number] Color code as a 24-bit number.
   def self.rating_color(rating)
     case rating
     when 'safe'
@@ -92,6 +114,9 @@ class Image
     end
   end
 
+  # Checks if the image is censored by the YAML filters or not.
+  # @param img [Hash] image data.
+  # @return [true, false] `true` if censored, `false` otherwise.
   def self.censored?(img)
     censored_tags = Booru.hidden_tags
     tags = img.tags

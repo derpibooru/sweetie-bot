@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Quotes model. Responsible for creating and removing quotes.
+# @author Luna aka Meow the Cat
 class Quote < ActiveRecord::Base
   validates :body, uniqueness: { scope: :user, message: 'quote already exists' }
   validates :body, presence: true
