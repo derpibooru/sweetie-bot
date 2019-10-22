@@ -5,7 +5,8 @@ require 'yaml'
 require 'hashie'
 
 require 'active_support'
-require 'discord_adapter'
+require 'discord/adapter'
+require 'discord/embed'
 require 'command_dispatcher'
 require 'derpibooru'
 require 'image'
@@ -37,13 +38,13 @@ class SweetieBot
   # Current version of the bot
   # @return [String] version string in X.X.X-suffix format.
   def self.version
-    '0.5.0'
+    '0.6.0'
   end
 
   # Current version's codename.
   # @return [String] codename of the current major (x.X.x) release.
   def self.codename
-    'Drunk Nomad'
+    'Bed Embed'
   end
 
   # Getter for the current running instance of SweetieBot.

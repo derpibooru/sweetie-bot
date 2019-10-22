@@ -43,35 +43,53 @@ class Image
       return false
     end
 
+    is_webm = img.mime_type == 'video/webm'
+
     embed_text = if img.spoilered
-      "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||https:#{img.representations.large}||"
+      "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||https:#{img.representations.full}||"
     else
       ''
     end
 
-    message.send_embed embed_text do |embed|
+    embed = EmbedBuilder.build do |embed|
       embed.url = "https://derpibooru.org/#{img.id}"
       embed.title = "#{img.id} (#{rating(img)})"
       embed.description = description
-      embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https:#{img.representations.full}")
       embed.timestamp = time
       embed.color = rating_color(rating(img))
 
-      tags = Discordrb::Webhooks::EmbedField.new
-      tags.name = 'Tags'
-      tags.value = img.tags.length < max_tags_len ? img.tags : "#{img.tags[0..max_tags_len]}..."
+      unless is_webm
+        embed.image "https:#{img.representations.full}"
+      end
+  
+      embed.field do |f|
+        f.name = 'Tags'
+        f.value = img.tags.length < max_tags_len ? img.tags : "#{img.tags[0..max_tags_len]}..."
+      end
 
-      stats = Discordrb::Webhooks::EmbedField.new
-      stats.name = 'Statistics'
-      stats.value = <<~STATS
-        #{img.comment_count} comments posted, score is #{img.score} (#{img.upvotes} up, #{img.downvotes} down)
-      STATS
+      embed.field do |f|
+        f.name = 'Comments'
+        f.value = img.comment_count.to_s
+        f.inline = true
+      end
 
-      embed.fields = [
-        tags, stats
-      ]
+      embed.field do |f|
+        f.name = 'Score'
+        f.value = "#{img.score} (#{img.upvotes} up, #{img.downvotes} down)"
+        f.inline = true
+      end
 
-      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Uploaded #{nice_time} by #{img.uploader}.")
+      embed.footer "Uploaded #{nice_time} by #{img.uploader}."
+    end
+
+    message.send_message embed_text, false, embed
+
+    if is_webm
+      if !img.spoilered
+        message.send_message "https:#{img.representations.full}"
+      else
+        message.send_message "||https:#{img.representations.full}||"
+      end
     end
   end
 
