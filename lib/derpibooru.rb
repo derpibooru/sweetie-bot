@@ -64,16 +64,18 @@ class Derpibooru
   # @option args [String] :url the URL to fetch, base URL is automatically prepended.
   # @option args [String] :query the query to append.
   # @option args [Boolean] :nsfw `true` to use NSFW filter, `false` to use SFW filter.
+  # @option args [Number] :filter filter ID override.
   # @return [Hashie::Mash] Query result, `nil` if nothing is found.
   def get(**args)
     args[:url] ||= args[:link] || args[:uri]
     args[:query] ||= args[:params]
+    filter_id = args[:filter] || (args[:nsfw] ? @nsfw_filter : @sfw_filter)
 
     uri = URI "#{@api_base}/#{args[:url]}"
 
-    uri.query = args[:query].to_s               if args[:query]
-    uri.query = "#{uri.query}&key=#{@api_key}"  if @api_key.present?
-    uri.query = "#{uri.query}#{uri.query.present? ? '&' : ''}filter_id=#{args[:nsfw] ? @nsfw_filter : @sfw_filter}"
+    uri.query = args[:query].to_s if args[:query]
+    uri.query = "#{uri.query}&key=#{@api_key}" if @api_key.present?
+    uri.query = "#{uri.query}#{uri.query.present? ? '&' : ''}filter_id=#{filter_id}"
 
     response = Net::HTTP.get_response uri
 
@@ -90,19 +92,21 @@ class Derpibooru
     get url: "#{id}.json", nsfw: nsfw
   end
 
-  # Fetches the data for the given tag.
+  # Fetches the data for the given tag. Does no filtering at all.
   # @param t [String] tag name, NOT slug.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def tag(t)
-    get url: "/tags/#{generate_slug(t)}.json", nsfw: true
+    get url: "/tags/#{generate_slug(t)}.json", filter: 56027
   end
 
   # Searches for images based on the given query.
-  # @param query [String] Booru query, exactly as you would write it into the search box.
-  # @param nsfw [Boolean] Whether to use the NSFW filter or not.
+  # @param args [Hash] the options for the query.
+  # @option args [String] :query Booru query, exactly as you would write it into the search box.
+  # @option args [Boolean] :nsfw `true` to use NSFW filter, `false` to use SFW filter.
+  # @option args [Number] :filter filter ID override.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
-  def search(query, nsfw = false)
-    get url: 'search.json', query: "q=#{query}", nsfw: nsfw
+  def search(**args)
+    get url: 'search.json', query: "q=#{args[:query]}", nsfw: args[:nsfw], filter: args[:filter]
   end
 
   # Picks a random image from a search query.
