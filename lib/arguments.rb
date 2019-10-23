@@ -27,7 +27,7 @@ class Arguments
         buf += "#{v.gsub(/^"/, '').gsub(/"$/, '')} "
 
         if v.end_with?('"')
-          @parsed.push buf.gsub(/\s$/, '')
+          @parsed.push buf.strip
           buf = ''
         end
       else

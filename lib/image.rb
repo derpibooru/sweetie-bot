@@ -6,6 +6,9 @@ require 'relative_time'
 # A class responsible for handling booru image-related things.
 # @author Luna aka Meow the Cat
 class Image
+  RATING_TAGS = %w[semi-grimdark grimdark grotesque safe suggestive questionable explicit].freeze
+  RATING_TAG_REGEX = /[\A,](semi\-grimdark|grimdark|grotesque|safe|suggestive|questionable|explicit)[\Z,]/.freeze
+
   # Sends an image as a reply to the message.
   # @param msg [Discordrb::Events::MessageEvent] message object.
   # @param id [Number] ID of the image.
@@ -51,6 +54,8 @@ class Image
       ''
     end
 
+    rendered_tags = Image.sort_tags(img.tags).join(', ')
+
     embed = EmbedBuilder.build do |embed|
       embed.url = "https://derpibooru.org/#{img.id}"
       embed.title = "#{img.id} (#{rating(img)})"
@@ -64,18 +69,18 @@ class Image
   
       embed.field do |f|
         f.name = 'Tags'
-        f.value = img.tags.length < max_tags_len ? img.tags : "#{img.tags[0..max_tags_len]}..."
+        f.value = rendered_tags.length < max_tags_len ? rendered_tags : "#{rendered_tags[0..max_tags_len]}..."
       end
 
       embed.field do |f|
         f.name = 'Comments'
-        f.value = img.comment_count.to_s
+        f.value = "**#{img.comment_count}**"
         f.inline = true
       end
 
       embed.field do |f|
         f.name = 'Score'
-        f.value = "#{img.score} (#{img.upvotes} up, #{img.downvotes} down)"
+        f.value = "#{img.upvotes}⭡  **#{img.score}**  ⭣#{img.downvotes}"
         f.inline = true
       end
 
@@ -93,12 +98,36 @@ class Image
     end
   end
 
+  # Sorts the given array of tags, prioritizing artists and ratings tags.
+  # @param tags [String] the tag list as a string (as returned by the API).
+  # @return [Array<String>] array of the sorted tags, WITH DISCORD FORMATTING.
+  def self.sort_tags(tags)
+    pieces = tags.split ', '
+
+    artist_tags = pieces.select { |t| t.start_with? 'artist' }
+                        .map { |t| "**#{t}**" }
+    rating_tags = pieces.select { |t| Image::RATING_TAGS.include? t }
+                        .map { |t| "**#{t}**" }
+    remainder = pieces.select { |t| !t.start_with?('artist') && !Image::RATING_TAGS.include?(t) }
+
+    rating_tags + artist_tags + remainder
+  end
+
   # Reads the content rating tag of the image.
   # @param img [Hash] Image data.
   # @return [String] Rating tag, or "unknown" if none are present.
   def self.rating(img)
-    match = img.tags.match /\b(grimdark|semi\-grimdark|grotesque|safe|suggestive|questionable|explicit)\b/
+    match = img.tags.gsub(/, /, ',').match Image::RATING_TAG_REGEX
     match[1] || 'unknown'
+  end
+
+  # Determines whether a set of tags has certain tag or not.
+  # @param img [Array<String>] tag data.
+  # @param tag [String] tag to search for.
+  # @return [Boolean] whether the tag is present or not.
+  def self.tags_contain?(tags, tag)
+    match = tags.gsub(/, /, ',').match /[\A,](#{tag})[\Z,]/
+    (match && match[1]) ? true : false
   end
 
   # Determines whether an image has certain tag or not.
@@ -106,8 +135,7 @@ class Image
   # @param tag [String] tag to search for.
   # @return [Boolean] whether the tag is present or not.
   def self.tag?(img, tag)
-    match = img.tags.match /\b(#{tag})\b/
-    match && match[1]
+    Image.tags_contain? img.tags, tag
   end
 
   # Returns the color based on rating, in Discord's number notation.
@@ -141,13 +169,13 @@ class Image
 
     censored_tags.each do |censor|
       if censor.is_a?(String)
-        return true if tags.include?(censor)
+        return true if Image.tags_contain? tags, censor
       else
         return true unless censor.map do |tag|
           if tag.start_with? '!'
-            !tags.include?(tag[1..])
+            !Image.tags_contain? tags, tag[1..]
           else
-            tags.include?(tag)
+            Image.tags_contain? tags, tag
           end
         end.include?(false)
       end

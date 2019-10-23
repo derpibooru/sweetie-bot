@@ -35,3 +35,4 @@ CommandDispatcher.register name: 'add_quote', help_text: 'adds a quote from a us
 end
 
 CommandDispatcher.alias 'aq', 'add_quote'
+CommandDispatcher.alias 'qa', 'add_quote'
