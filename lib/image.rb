@@ -7,7 +7,7 @@ require 'relative_time'
 # @author Luna aka Meow the Cat
 class Image
   RATING_TAGS = %w[semi-grimdark grimdark grotesque safe suggestive questionable explicit].freeze
-  RATING_TAG_REGEX = /[\A,](semi\-grimdark|grimdark|grotesque|safe|suggestive|questionable|explicit)[\Z,]/.freeze
+  RATING_TAG_REGEX = /(semi\-grimdark|grimdark|grotesque|safe|suggestive|questionable|explicit)/.freeze
 
   # Sends an image as a reply to the message.
   # @param msg [Discordrb::Events::MessageEvent] message object.
