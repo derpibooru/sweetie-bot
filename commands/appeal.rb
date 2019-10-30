@@ -7,11 +7,10 @@ CommandDispatcher.register name: 'appeal', help_text: 'allows access to the #ban
   begin
     case appeal
     when nil
-       msg.sender.add_role(appeals_role)
+      msg.sender.add_role(appeals_role)
     when 'exit'
       msg.sender.remove_role(appeals_role)
     end
-
   rescue StandardError => ex
     msg.reply ex.message
   end

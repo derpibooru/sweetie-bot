@@ -66,7 +66,7 @@ class Image
       unless is_webm
         embed.image "https:#{img.representations.full}"
       end
-  
+
       embed.field do |f|
         f.name = 'Tags'
         f.value = rendered_tags.length < max_tags_len ? rendered_tags : "#{rendered_tags[0..max_tags_len]}..."
