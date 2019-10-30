@@ -56,16 +56,14 @@ class Image
 
     rendered_tags = Image.sort_tags(img.tags).join(', ')
 
-    embed = EmbedBuilder.build do |embed|
+    embed_data = EmbedBuilder.build do |embed|
       embed.url = "https://derpibooru.org/#{img.id}"
       embed.title = "#{img.id} (#{rating(img)})"
       embed.description = description
       embed.timestamp = time
       embed.color = rating_color(rating(img))
 
-      unless is_webm
-        embed.image "https:#{img.representations.full}"
-      end
+      embed.image "https:#{img.representations.full}" unless is_webm
 
       embed.field do |f|
         f.name = 'Tags'
@@ -87,7 +85,7 @@ class Image
       embed.footer "Uploaded #{nice_time} by #{img.uploader}."
     end
 
-    message.send_message embed_text, false, embed
+    message.send_message embed_text, false, embed_data
 
     if is_webm
       if !img.spoilered
@@ -127,7 +125,7 @@ class Image
   # @return [Boolean] whether the tag is present or not.
   def self.tags_contain?(tags, tag)
     match = tags.gsub(/, /, ',').match /[\A,](#{tag})[\Z,]/
-    (match && match[1]) ? true : false
+    match && match[1] ? true : false
   end
 
   # Determines whether an image has certain tag or not.
