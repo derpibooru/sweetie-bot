@@ -7,7 +7,6 @@ require 'relative_time'
 # @author Luna aka Meow the Cat
 class Image
   RATING_TAGS = %w[semi-grimdark grimdark grotesque safe suggestive questionable explicit].freeze
-  RATING_TAG_REGEX = /(semi\-grimdark|grimdark|grotesque|safe|suggestive|questionable|explicit)/.freeze
 
   # Sends an image as a reply to the message.
   # @param msg [Discordrb::Events::MessageEvent] message object.
@@ -100,7 +99,7 @@ class Image
   # @param tags [String] the tag list as a string (as returned by the API).
   # @return [Array<String>] array of the sorted tags, WITH DISCORD FORMATTING.
   def self.sort_tags(tags)
-    pieces = tags.split ', '
+    pieces = tags.split(',').map(&:trim)
 
     artist_tags = pieces.select { |t| t.start_with? 'artist' }
                         .map { |t| "**#{t}**" }
@@ -115,8 +114,9 @@ class Image
   # @param img [Hash] Image data.
   # @return [String] Rating tag, or "unknown" if none are present.
   def self.rating(img)
-    match = img.tags.gsub(/, /, ',').match Image::RATING_TAG_REGEX
-    match[1] || 'unknown'
+    img.tags.split(',').map(&:trim).select do |tag|
+      Image::RATING_TAGS.include? tag
+    end.first
   end
 
   # Determines whether a set of tags has certain tag or not.
@@ -124,8 +124,9 @@ class Image
   # @param tag [String] tag to search for.
   # @return [Boolean] whether the tag is present or not.
   def self.tags_contain?(tags, tag)
-    match = tags.gsub(/, /, ',').match /[\A,](#{tag})[\Z,]/
-    match && match[1] ? true : false
+    tags.split(',').map(&:trim).any? do |t|
+      tag == t
+    end
   end
 
   # Determines whether an image has certain tag or not.
