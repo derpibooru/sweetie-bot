@@ -99,7 +99,7 @@ class Image
   # @param tags [String] the tag list as a string (as returned by the API).
   # @return [Array<String>] array of the sorted tags, WITH DISCORD FORMATTING.
   def self.sort_tags(tags)
-    pieces = tags.split(',').map(&:trim)
+    pieces = tags.split(',').map(&:strip)
 
     artist_tags = pieces.select { |t| t.start_with? 'artist' }
                         .map { |t| "**#{t}**" }
@@ -114,7 +114,7 @@ class Image
   # @param img [Hash] Image data.
   # @return [String] Rating tag, or "unknown" if none are present.
   def self.rating(img)
-    img.tags.split(',').map(&:trim).select do |tag|
+    img.tags.split(',').map(&:strip).select do |tag|
       Image::RATING_TAGS.include? tag
     end.first
   end
@@ -124,7 +124,7 @@ class Image
   # @param tag [String] tag to search for.
   # @return [Boolean] whether the tag is present or not.
   def self.tags_contain?(tags, tag)
-    tags.split(',').map(&:trim).any? do |t|
+    tags.split(',').map(&:strip).any? do |t|
       tag == t
     end
   end
