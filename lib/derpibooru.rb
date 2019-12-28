@@ -89,14 +89,15 @@ class Derpibooru
   # @param nsfw [Boolean] Whether to use the NSFW filter or not.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def image(id, nsfw = false)
-    get url: "#{id}.json", nsfw: nsfw
+    img = get url: "images/#{id}", nsfw: nsfw
+    img["image"] if img
   end
 
   # Fetches the data for the given tag. Does no filtering at all.
   # @param t [String] tag name, NOT slug.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def tag(t)
-    get url: "/tags/#{generate_slug(t)}.json", filter: '56027'
+    get url: "tags/#{generate_slug(t)}.json", filter: '56027'
   end
 
   # Searches for images based on the given query.
@@ -106,7 +107,7 @@ class Derpibooru
   # @option args [Number] :filter filter ID override.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def search(**args)
-    get url: 'search.json', query: "q=#{args[:query]}", nsfw: args[:nsfw], filter: args[:filter]
+    get url: 'search/images', query: "q=#{args[:query]}", nsfw: args[:nsfw], filter: args[:filter]
   end
 
   # Picks a random image from a search query.
@@ -114,7 +115,11 @@ class Derpibooru
   # @param nsfw [Boolean] Whether to use the NSFW filter or not.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def random_image(query = 'safe, cute', nsfw = false)
-    img = get(url: 'search.json', query: "q=#{query.present? ? query : 'safe, cute'}&random_image=1", nsfw: nsfw)
-    image img.id, nsfw if img
+    img = get(url: 'search/images', query: "q=#{query.present? ? query : 'safe, cute'}&sf=random&per_page=1", nsfw: nsfw)
+
+    if img
+      img_data = img["images"][0]
+      image img_data.id, nsfw if img_data
+    end
   end
 end

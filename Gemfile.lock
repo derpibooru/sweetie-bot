@@ -1,13 +1,12 @@
 GIT
   remote: https://github.com/meew0/discordrb.git
-  revision: 329045797fb2eb76275d47403eb08016458910e6
+  revision: 2c2b50e32c055aa8288b34644346a10696d5efa1
   specs:
     discordrb (3.3.0)
       discordrb-webhooks (~> 3.3.0)
       ffi (>= 1.9.24)
       opus-ruby
-      rbnacl (~> 6.0)
-      rest-client (>= 2.1.0.rc1)
+      rest-client (>= 2.0.0)
       websocket-client-simple (>= 0.3.0)
     discordrb-webhooks (3.3.0)
       rest-client (>= 2.1.0.rc1)
@@ -15,38 +14,36 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (6.0.0)
-      activesupport (= 6.0.0)
-    activerecord (6.0.0)
-      activemodel (= 6.0.0)
-      activesupport (= 6.0.0)
-    activesupport (6.0.0)
+    activemodel (6.0.2.1)
+      activesupport (= 6.0.2.1)
+    activerecord (6.0.2.1)
+      activemodel (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+    activesupport (6.0.2.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-      zeitwerk (~> 2.1, >= 2.1.8)
+      zeitwerk (~> 2.2)
     concurrent-ruby (1.1.5)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     event_emitter (0.2.6)
-    ffi (1.11.1)
-    hashie (3.6.0)
+    ffi (1.11.3)
+    hashie (4.0.0)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
-    mime-types (3.3)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.1009)
-    minitest (5.12.2)
+    minitest (5.13.0)
     netrc (0.11.0)
     opus-ruby (1.0.1)
       ffi
-    rake (13.0.0)
-    rbnacl (6.0.1)
-      ffi
+    rake (13.0.1)
     relative_time (1.1.0)
       i18n
     rest-client (2.1.0)
@@ -54,9 +51,9 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    sqlite3 (1.4.1)
+    sqlite3 (1.4.2)
     thread_safe (0.3.6)
-    tzinfo (1.2.5)
+    tzinfo (1.2.6)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
@@ -65,7 +62,7 @@ GEM
     websocket-client-simple (0.3.0)
       event_emitter
       websocket
-    zeitwerk (2.2.0)
+    zeitwerk (2.2.2)
 
 PLATFORMS
   ruby
@@ -80,4 +77,4 @@ DEPENDENCIES
   sqlite3
 
 BUNDLED WITH
-   2.0.2
+   2.1.2
