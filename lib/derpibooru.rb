@@ -97,7 +97,8 @@ class Derpibooru
   # @param t [String] tag name, NOT slug.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def tag(t)
-    get url: "tags/#{generate_slug(t)}.json", filter: '56027'
+    tag = get url: "tags/#{generate_slug(t)}", filter: '2'
+    tag.tag if tag
   end
 
   # Searches for images based on the given query.
