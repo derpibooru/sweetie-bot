@@ -97,7 +97,7 @@ class Derpibooru
   # @param t [String] tag name, NOT slug.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def tag(t)
-    tag = get url: "tags/#{generate_slug(t)}", filter: '2'
+    tag = get url: "tags/#{generate_slug(t)}", filter: '56027'
     tag.tag if tag
   end
 
