@@ -62,7 +62,7 @@ class Image
       embed.timestamp = time
       embed.color = rating_color(rating(img))
 
-      embed.image "https:#{img.representations.full}" unless is_webm
+      embed.image "#{img.representations.full}" unless is_webm
 
       embed.field do |f|
         f.name = 'Tags'
@@ -88,9 +88,9 @@ class Image
 
     if is_webm
       if !img.spoilered
-        message.send_message "https:#{img.representations.full}"
+        message.send_message "#{img.representations.full}"
       else
-        message.send_message "||https:#{img.representations.full}||"
+        message.send_message "||#{img.representations.full}||"
       end
     end
   end

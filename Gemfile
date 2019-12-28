@@ -17,4 +17,4 @@ gem 'hashie'
 gem 'relative_time'
 
 # GitHub version seems to be less buggy
-gem 'discordrb', git: 'https://github.com/meew0/discordrb.git'
+gem 'discordrb', git: 'https://github.com/meew0/discordrb.git', ref: '2c2b50e'
