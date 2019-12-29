@@ -12,11 +12,14 @@ CommandDispatcher.register name: 'printerfact', help_text: 'displays a random fa
 
   next unless fact
 
-  fact = fact.gsub(/(cat|lion|leopard|lynx)/i, 'printer')
+  fact = fact.gsub(/(cat|feline)/i, 'printer')
              .gsub(/kitten/i, 'baby printer')
-             .gsub(/cheetah/i, 'big printer')
+             .gsub(/(lion|leopard|lynx|cheetah)/i, 'big printer')
+             .gsub(/\.(\s*)(printer|baby|big)/) do |match|
+                ".#{$1}#{$2.capitalize}"
+              end  
 
-  fact = "#{fact[0].capitalize}#{fact[1..]}"
+  fact = fact.capitalize
 
   msg.reply with: fact, mention: false
 end
