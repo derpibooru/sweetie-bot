@@ -63,9 +63,9 @@ class SweetieBot
   # @yield [msg] callback to be called when a message is sent.
   # @yieldparam [Discordrb::Events::MessageEvent] msg message event.
   def handler
-    @handlers.push proc { |msg|
+    @handlers.push(proc do |msg|
       yield msg
-    }
+    end)
   end
 
   # Loads a configuration from a YAML file.
@@ -81,7 +81,7 @@ class SweetieBot
   # @note Config MUST be loaded beforehand!
   def run
     # Include all handlers now.
-    Dir['./handlers/*.rb'].each do |file|
+    Dir['./handlers/*.rb'].sort.each do |file|
       require file
     end
 

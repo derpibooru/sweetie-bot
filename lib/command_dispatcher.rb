@@ -100,6 +100,6 @@ class CommandDispatcher
   end
 end
 
-Dir['./commands/*.rb'].each do |file|
+Dir['./commands/*.rb'].sort.each do |file|
   require file
 end

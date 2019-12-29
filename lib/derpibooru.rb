@@ -90,7 +90,7 @@ class Derpibooru
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def image(id, nsfw = false)
     img = get url: "images/#{id}", nsfw: nsfw
-    img["image"] if img
+    img['image'] if img
   end
 
   # Fetches the data for the given tag. Does no filtering at all.
@@ -119,7 +119,7 @@ class Derpibooru
     img = get(url: 'search/images', query: "q=#{query.present? ? query : 'safe, cute'}&sf=random&per_page=1", nsfw: nsfw)
 
     if img
-      img_data = img["images"][0]
+      img_data = img['images'][0]
       image img_data.id, nsfw if img_data
     end
   end

@@ -1,5 +1,5 @@
 # Offense count: 1
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Exclude:
     - 'config/unicorn.rb'
 
@@ -35,7 +35,7 @@ Style/GuardClause:
   Enabled: false
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   Exclude:
     - 'db/**/*.rb'
 
@@ -52,11 +52,11 @@ Style/GlobalVars:
 
 # STYLE DECISIONS
 # Let us line things up
-Layout/AlignArguments:
+Layout/ArgumentAlignment:
   # TODO: EnforcedStyle: with_fixed_indentation
   Enabled: false
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
 
@@ -82,11 +82,11 @@ Style/EmptyMethod:
   EnforcedStyle: expanded
 
 # More excessive indentation avoided.
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
 # Even more.
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
 # We should be able to comment things out, dammit
@@ -112,13 +112,6 @@ Style/NegatedIf:
 Style/NumericPredicate:
   AutoCorrect: true
   EnforcedStyle: comparison
-
-# has_blah? is okay.
-Naming/PredicateName:
-  NameWhitelist:
-    - has_array_field
-    - has_tag_proxy
-    - has_thumbnails?
 
 # e's aren't good
 Naming/RescuedExceptionsVariableName:
@@ -175,7 +168,7 @@ Metrics/ParameterLists:
   Max: 7
 
 # fp
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   AllowedNames: io, id, to, by, on, in, at, ip, db, fp
 
 # Broken in rubocop 0.73

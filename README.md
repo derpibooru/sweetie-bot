@@ -4,7 +4,7 @@ A simple Derpibooru image fetching bot with a few extra additions for spice.
 ## Running
 ### Prerequisites
 * Linux (Debian Stretch / Ubuntu 16.04 or newer recommended)
-* Ruby 2.6.5
+* Ruby 2.7.0
 * `libsqlite3-dev`
 
 ```sh

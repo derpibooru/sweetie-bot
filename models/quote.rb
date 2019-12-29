@@ -37,7 +37,7 @@ class Quote < ActiveRecord::Base
     raise 'ID out of range.' if id.to_i <= 0 || quote_count < id
 
     if (q = quotes.order(created_at: :asc).offset(id - 1).first)
-      return q, id, quote_count
+      [q, id, quote_count]
     else
       raise 'quote not found.'
     end

@@ -62,7 +62,7 @@ class Image
       embed.timestamp = time
       embed.color = rating_color(rating(img))
 
-      embed.image "#{img.representations.full}" unless is_webm
+      embed.image img.representations.full unless is_webm
 
       embed.field do |f|
         f.name = 'Tags'
@@ -88,7 +88,7 @@ class Image
 
     if is_webm
       if !img.spoilered
-        message.send_message "#{img.representations.full}"
+        message.send_message img.representations.full
       else
         message.send_message "||#{img.representations.full}||"
       end
@@ -100,9 +100,9 @@ class Image
   # @return [Array<String>] array of the sorted tags, WITH DISCORD FORMATTING.
   def self.sort_tags(tags)
     artist_tags = tags.select { |t| t.start_with? 'artist' }
-                        .map { |t| "**#{t}**" }
+                      .map { |t| "**#{t}**" }
     rating_tags = tags.select { |t| Image::RATING_TAGS.include? t }
-                        .map { |t| "**#{t}**" }
+                      .map { |t| "**#{t}**" }
     remainder = tags.select { |t| !t.start_with?('artist') && !Image::RATING_TAGS.include?(t) }
 
     rating_tags + artist_tags + remainder
