@@ -4,7 +4,7 @@ require 'net/http'
 require 'json'
 require 'hashie'
 
-# Derpibooru (booru-on-rails) API backend class.
+# Derpibooru (philomena) API backend class.
 # @author Luna aka Meow the Cat
 # @attr [String, Number] sfw_filter The ID of the SFW filter to use.
 # @attr [String, Number] nsfw_filter The ID of the NSFW filter to use.
