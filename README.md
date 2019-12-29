@@ -21,9 +21,15 @@ Install all the required packages using Bundler
 ```sh
 bundle install
 ```
-Copy the example config file and modify it
+Copy the example config file (located in the `config/` folder) and modify it
 ```sh
 cp settings.example.yml settings.yml
+```
+Migrate the database
+(Please note that this migration engine is hilariously broken. Basically you can only migrate it once and then it breaks.)
+(todo: rewrite everything)
+```sh
+rake db:migrate
 ```
 Once you're done, you can run the bot by running
 ```sh
