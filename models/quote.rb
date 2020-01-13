@@ -52,6 +52,13 @@ class Quote < ActiveRecord::Base
     search(field: :user, value: user.gsub(/^<@!/, '<@'), id: id)[0].destroy
   end
 
+  # Replaces a quote belonging to a specific user by it's position.
+  def self.replace(user, id, newbody)
+    quote = search(field: :user, value: user.gsub(/^<@!/, '<@'), id: id)[0]
+    quote.body = newbody
+    quote.save!
+  end
+
   # Removes a quote made in a specific channel by it's position.
   # @note Uses database order of the quote, not the `#id` field!
   #
@@ -59,6 +66,13 @@ class Quote < ActiveRecord::Base
   # @param id [Number] ID of the quote to remove.
   def self.remove_from_channel(chan, id)
     search(field: :channel, value: chan, id: id)[0].destroy
+  end
+
+  # Replaces quote text made in a specific channel by it's position.
+  def self.replace_on_channel(chan, id, newbody)
+    quote = search(field: :channel, value: chan, id: id)[0]
+    quote.body = newbody
+    quote.save!
   end
 
   # Gets the type of the subject derived from the Discord ID.
