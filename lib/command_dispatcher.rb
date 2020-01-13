@@ -84,7 +84,7 @@ class CommandDispatcher
   # calling the command callback.
   # @param msg [Discordrb::Events::MessageEvent] the message event.
   def self.handle(msg)
-    match = msg.text.match /.([\w_]+)\s*(.*)/
+    match = msg.text.match /.([\w_]+)\s*(.*)/m
 
     return unless match
 

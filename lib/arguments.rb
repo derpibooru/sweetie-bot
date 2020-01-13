@@ -5,7 +5,7 @@
 # @attr [String] raw The raw, unparsed arguments string.
 # @attr [Array<String>] parsed The parsed arguments string.
 class Arguments
-  attr_accessor :raw, :parsed
+  attr_accessor :raw, :parsed, :remainder
 
   # Parses the arguments string.
   # @todo Write a better parser. This one is pretty awful, but hey, it works.
@@ -16,6 +16,7 @@ class Arguments
 
     @raw    = str
     @parsed = []
+    @remainder = str.sub(/\<@![0-9]*\>/, '')
 
     return self if str == ''
 
