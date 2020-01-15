@@ -16,7 +16,7 @@ class Arguments
 
     @raw    = str
     @parsed = []
-    @remainder = str.sub(/\<@![0-9]*\>/, '')
+    @remainder = str.sub(/\<@!?[0-9]*\>/, '')
 
     return self if str == ''
 
