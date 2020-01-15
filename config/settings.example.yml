@@ -28,7 +28,7 @@ discord:
 # Derpibooru-specific configuration.
 booru:
   # Base URL for API calls.
-  api_url: "https://derpibooru.org"
+  api_url: "https://derpibooru.org/api/v1/json"
   # Derpibooru API key to use.
   api_key: ''
   # Filter to use in NSFW channels.
