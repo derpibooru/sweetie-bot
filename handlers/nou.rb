@@ -4,8 +4,8 @@ SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase
 
   if lower.match?(/^(the|this)?\s*bot\b/i) ||
-     lower.include?('sweetie')            ||
-     lower.include?('derpi bot')          ||
+     lower.match?(/sweetie\s*+(?!belle)/i) ||
+     lower.include?('derpi bot')           ||
      lower.include?('derpibooru bot')
     response = 'no u'
     num = rand(10)
