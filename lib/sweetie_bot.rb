@@ -93,8 +93,8 @@ class SweetieBot
       conn.message do |msg|
         next unless @config.discord.allowed_channel_types.include?(msg.channel.channel_type)
 
-        if @config.prefixes.include? msg.text[0]
-          CommandDispatcher.handle msg
+        if (prefix = check_prefix(msg.text))
+          CommandDispatcher.handle prefix, msg
         else
           @handlers.each do |handler|
             break if handler.call(msg) == true
@@ -190,5 +190,19 @@ class SweetieBot
   # @param msg [String] message to output.
   def self.log(msg)
     puts "#{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')} - #{msg}"
+  end
+
+  private
+
+  def check_prefix(text)
+    winning_prefix = nil
+
+    @config.prefixes.each do |prefix|
+      if text.start_with? prefix
+        winning_prefix = prefix if !winning_prefix || prefix.length > winning_prefix.length
+      end
+    end
+
+    winning_prefix
   end
 end
