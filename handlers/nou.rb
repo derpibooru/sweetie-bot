@@ -3,16 +3,13 @@
 SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase
 
-  if lower.match?(/^(the|this)?\s*bot\b/i) ||
-     lower.match?(/sweetie\s*+(?!belle)/i) ||
-     lower.include?('derpi bot')           ||
-     lower.include?('derpibooru bot')
+  if lower.match?(/^(the|this)?\s*bot\b/i)
     response = 'no u'
     num = rand(10)
 
     if num > 7
-      response += ' :V'
-    elsif num == 1
+      next
+    elsif num <= 2
       response = 'correct'
     end
 

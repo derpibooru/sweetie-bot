@@ -8,9 +8,8 @@ CommandDispatcher.register name: 'quote', help_text: 'displays a quote from a us
   if !field
     msg.reply <<~HELPTEXT
       cannot quote this, try a user or a channel!
-      If you meant to add or remove a quote, try the following commands:
+      If you meant to add a quote, try the following commands:
       **.add_quote** _<user or channel> <quote text...>_
-      **.del_quote** _<user or channel> <index>_
       **.quotes** _<user or channel>_
     HELPTEXT
     next
