@@ -35,7 +35,7 @@ CommandDispatcher.register name: 'quote', help_text: 'displays a quote from a us
       count = quote_count
     end
 
-    msg.reply "(#{qid} / #{count}) #{quote.user}: #{quote.body}", mention: false
+    msg.reply "(#{qid} / #{count}) **#{msg.escape_name(quote.user)}**: #{quote.body}", mention: false
   rescue StandardError => ex
     msg.reply ex.message
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 CommandDispatcher.register name: 'rickroll' do |msg, _|
-  msg.reply 'hey, check this out <https://www.youtube.com/watch?v=dQw4w9WgXcQ>'
+  msg.reply '<https://www.youtube.com/watch?v=dQw4w9WgXcQ>', mention: false
 end
 
 CommandDispatcher.alias 'dailyvideo', 'rickroll'

@@ -18,7 +18,9 @@ CommandDispatcher.register name: 'replace_quote', help_text: '(admin) replaces a
       Quote.replace_on_channel subject, quote_id, body
     end
 
-    msg.reply "quote ##{quote_id} replaced on #{subject}."
+    escaped_name = msg.escape_name(subject)
+
+    msg.reply "Quote ##{quote_id} replaced on **#{escaped_name}**.\n**#{escaped_name}**: #{body}", mention: false
   rescue StandardError => ex
     msg.reply ex.message
   end

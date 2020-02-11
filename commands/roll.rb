@@ -4,7 +4,7 @@ CommandDispatcher.register name: 'roll', help_text: 'generates a random number' 
   ceil = args.raw.to_i if args.present?
   ceil ||= 24
 
-  msg.reply with: "#{msg.sender.mention} has rolled **#{rand(ceil)}** out of **#{ceil}**.", mention: false
+  msg.reply with: "**#{msg.sender.display_name}** has rolled **#{rand(ceil)}** out of **#{ceil}**.", mention: false
 end
 
 CommandDispatcher.alias 'r', 'roll'

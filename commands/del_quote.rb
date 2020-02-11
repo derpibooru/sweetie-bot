@@ -17,7 +17,7 @@ CommandDispatcher.register name: 'del_quote', help_text: '(admin) deletes a spec
       Quote.remove_from_channel subject, quote_id
     end
 
-    msg.reply "quote ##{quote_id} removed from #{subject}."
+    msg.reply "Quote ##{quote_id} removed from **#{msg.escape_name(subject)}**.", mention: false
   rescue StandardError => ex
     msg.reply ex.message
   end

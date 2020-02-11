@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_10_20_192316) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.boolean "admin"
+    t.boolean "admin", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["admin"], name: "index_users_on_admin"

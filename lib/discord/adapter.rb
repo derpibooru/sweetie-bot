@@ -62,6 +62,16 @@ class Discordrb::Events::MessageEvent
   def from_bot?
     from_bot? || message.webhook?
   end
+
+  def escape_name(username)
+    user_id = username.gsub(/^<@!?/, '').gsub(/>$/, '').to_i
+
+    if user_id && (member = server.member(user_id))
+      return member.display_name
+    end
+
+    'Unknown Member'
+  end
 end
 
 # A container for a Discord connection.

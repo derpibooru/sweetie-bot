@@ -28,7 +28,7 @@ CommandDispatcher.register name: 'add_quote', help_text: 'adds a quote from a us
 
   begin
     Quote.add user, channel, text
-    msg.reply "quote added (#{user}: #{text})."
+    msg.reply "Quote added (**#{msg.escape_name(user)}**: #{text}).", mention: false
   rescue ActiveRecord::RecordInvalid
     msg.reply 'this quote already exists!'
   end
