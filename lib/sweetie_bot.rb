@@ -33,6 +33,7 @@ class SweetieBot
     @should_stop = false
     @connections = []
     @handlers = []
+    @rate_limits = Hash.new
   end
 
   # Current version of the bot
@@ -66,6 +67,22 @@ class SweetieBot
     @handlers.push(proc do |msg|
       yield msg
     end)
+  end
+
+  # Execute a command with a rate limiter.
+  # @param id [String] The unique ID of the rate limiter.
+  # @param seconds [Number] The number of seconds that are required to be held between two executions of the code.
+  # @yield nil
+  def rate_limit(id, seconds = 1)
+    now_time = Time.now
+    last_exec = @rate_limits[id] || (now_time - seconds.seconds - 1.second)
+    
+    if now_time > last_exec + seconds.seconds
+      yield_result = yield
+      @rate_limits[id] = now_time
+    end
+
+    yield_result
   end
 
   # Loads a configuration from a YAML file.
