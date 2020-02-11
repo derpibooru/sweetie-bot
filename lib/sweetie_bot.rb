@@ -33,7 +33,7 @@ class SweetieBot
     @should_stop = false
     @connections = []
     @handlers = []
-    @rate_limits = Hash.new
+    @rate_limits = {}
   end
 
   # Current version of the bot
@@ -76,7 +76,7 @@ class SweetieBot
   def rate_limit(id, seconds = 1)
     now_time = Time.now
     last_exec = @rate_limits[id] || (now_time - seconds.seconds - 1.second)
-    
+
     if now_time > last_exec + seconds.seconds
       yield_result = yield
       @rate_limits[id] = now_time
