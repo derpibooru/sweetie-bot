@@ -4,7 +4,7 @@ CommandDispatcher.register name: 'pony', help_text: 'displays a random image mat
   img = Booru.random_image args.raw, msg.channel.check_nsfw?
 
   if img
-    Image.embed img, message: msg, description: args.present? ? nil : 'PONY PONY PONY'
+    Image.embed img, message: msg, description: args.present? ? nil : 'PONY PONY PONY', condense: true
   else
     msg.reply with: '_No results for this query!_', mention: false
   end

@@ -28,11 +28,13 @@ class Image
   # @param args [Hash] options for the embed.
   # @option args [Discordrb::Events::MessageEvent] :message The message object
   # @option args [String] :description Description of the image to send.
+  # @option args [Boolean] :condense Whether to display shortened version of the image or not.
   # @return [false] `false` if the image is censored by the YAML filters.
   def self.embed(img, **args)
     max_desc_len = SweetieBot.config.messages.max_desc_length
     max_tags_len = SweetieBot.config.messages.max_tag_length
 
+    condensed = args[:condense] || false
     message = args[:message] || args[:msg]
     time = Time.parse(img.created_at)
     nice_time = RelativeTime.in_words(time)
@@ -58,15 +60,17 @@ class Image
     embed_data = EmbedBuilder.build do |embed|
       embed.url = "https://derpibooru.org/#{img.id}"
       embed.title = "#{img.id} (#{rating(img)})"
-      embed.description = description
+      embed.description = description unless condensed
       embed.timestamp = time
       embed.color = rating_color(rating(img))
 
       embed.image img.representations.full unless is_webm
 
-      embed.field do |f|
-        f.name = 'Tags'
-        f.value = rendered_tags.length < max_tags_len ? rendered_tags : "#{rendered_tags[0..max_tags_len]}..."
+      unless condensed
+        embed.field do |f|
+          f.name = 'Tags'
+          f.value = rendered_tags.length < max_tags_len ? rendered_tags : "#{rendered_tags[0..max_tags_len]}..."
+        end
       end
 
       embed.field do |f|
