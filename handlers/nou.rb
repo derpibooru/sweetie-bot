@@ -7,7 +7,7 @@ SweetieBot.instance.handler do |msg|
     response = 'no u'
     num = rand(10)
 
-    if num > 7
+    if num >= 7
       next
     elsif num <= 2
       response = 'correct'
