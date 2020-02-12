@@ -15,7 +15,7 @@ SweetieBot.instance.handler do |msg|
 
       next unless emoji
 
-      emoji.map do |char|
+      emoji.each do |char|
         msg.message.react char
         sleep 0.25
       end
