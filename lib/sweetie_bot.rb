@@ -214,8 +214,10 @@ class SweetieBot
   def check_prefix(text)
     winning_prefix = nil
 
+    lower_text = text.downcase
+
     @config.prefixes.each do |prefix|
-      if text.start_with? prefix
+      if lower_text.start_with? prefix.downcase
         winning_prefix = prefix if !winning_prefix || prefix.length > winning_prefix.length
       end
     end
