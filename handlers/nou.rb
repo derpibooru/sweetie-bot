@@ -5,12 +5,19 @@ SweetieBot.instance.handler do |msg|
 
   if lower.match?(/^(the|this)?\s*bot\b/i)
     SweetieBot.instance.rate_limit 'nou', 5 do
-      emoji = if rand(10) < 3
+      emoji = case rand(1..10)
+      when 1, 2, 3
         # YES
         ['🇾', '🇪', '🇸']
-      else
+      when 4, 5, 6
         # NOU
         ['🇳', '🇴', '🇺']
+      when 10
+        # DICK
+        ['🇩', '🇮', '🇨', '🇰']
+      else
+        # NO
+        ['🇳', '🇴']
       end
 
       next unless emoji
