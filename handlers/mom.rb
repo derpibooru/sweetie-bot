@@ -20,8 +20,8 @@ SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase
 
   if lower.start_with?("sweetie who is luna's kitty")
-    msg.reply '<@461926422462595092> ^~^'
-    return true
+    msg.reply '<@461926422462595092> ^~^', mention: false
+    next
   end
 
   if lower.start_with?('sweetie who is your') ||
