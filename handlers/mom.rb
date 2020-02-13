@@ -11,8 +11,11 @@ RANDOM_PHRASES = [
   'the person I am pinging :3'
 ].freeze
 
+# Mah bot I choose who gets this :3
+ALLOWED_IDS = %w[128567958086615040 263103777521926145 77736797399941120].freeze
+
 SweetieBot.instance.handler do |msg|
-  next unless msg.sender.id.to_s == '128567958086615040'
+  next unless ALLOWED_IDS.include? msg.sender.id.to_s
 
   lower = msg.text.downcase
 
