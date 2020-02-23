@@ -10,7 +10,7 @@ CommandDispatcher.register name: 'appeal', help_text: 'allows access to the #ban
     when nil
       next if msg.sender.role?(appeals_role)
       msg.sender.add_role(appeals_role)
-      msg.reply "Please proceed to <\##{appeals_channel}> with your Ban ID ready. \n\nWhen you are done with the appeal, use `!appeal exit`."
+      msg.reply "please proceed to <\##{appeals_channel}> with your Ban ID ready. \n\nWhen you are done with the appeal, use `.appeal exit`."
     when 'exit'
       next if !msg.sender.role?(appeals_role)
       msg.sender.remove_role(appeals_role)
