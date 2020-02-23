@@ -50,7 +50,7 @@ class Image
     is_webm = img.mime_type == 'video/webm'
 
     embed_text = if img.spoilered
-      "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||https:#{img.representations.full}||"
+      "This **#{rating(img)}** image is spoilered by my current filter (may contain episode spoilers)!\n||https:#{img.representations.full} ||"
     else
       ''
     end

@@ -23,8 +23,9 @@ discord:
   # These users will have access to commands such as del_quote.
   administrators:
     - 128567958086615040 # Luna#5678
-  # IDs of the ban_appeals role
-  appeals_role: '123456789012345678'
+  # IDs of the ban_appeals role and channel
+  appeals_role: '436274219471339520'
+  appeals_channel: '436273790465474561'
 # Derpibooru-specific configuration.
 booru:
   # Base URL for API calls.

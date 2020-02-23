@@ -4,7 +4,7 @@ CommandDispatcher.register name: 'replace_quote', help_text: '(admin) replaces a
   subject = args.parsed[0]
   field = Quote.subject_type subject
   quote_id = args.parsed[1] ? args.parsed[1].to_i : false
-  body = args.parsed[2..].join(' ')
+  text = args.without_mention_or_id
 
   next if !field || field == :id
   next if !quote_id
@@ -13,9 +13,9 @@ CommandDispatcher.register name: 'replace_quote', help_text: '(admin) replaces a
   begin
     case field
     when :user
-      Quote.replace subject, quote_id, body
+      Quote.replace subject, quote_id, text
     when :channel
-      Quote.replace_on_channel subject, quote_id, body
+      Quote.replace_on_channel subject, quote_id, text
     end
 
     escaped_name = msg.escape_name(subject)
