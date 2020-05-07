@@ -64,7 +64,7 @@ SweetieBot.instance.handler do |msg|
   end
   
   if lower.start_with?("sweetie what")
-    msg.reply "#{DICK_PHRASES.sample}.", mention: false
+    msg.reply DICK_PHRASES.sample, mention: false
     next
   end
 
