@@ -43,7 +43,7 @@ DICK_PHRASES = [
   'Luna',
   'bitch lasagna',
   'creeper'
-]
+].freeze
 
 # Mah bot I choose who gets this :3
 ALLOWED_IDS = %w[128567958086615040 263103777521926145].freeze
