@@ -4,7 +4,7 @@ A simple Philomena-based booru image fetching bot with a few extra additions for
 ## Running
 ### Prerequisites
 * Linux (Debian Stretch / Ubuntu 16.04 or newer recommended)
-* Ruby 2.7.0
+* Ruby 2.7.1
 * `libsqlite3-dev`
 
 ```sh

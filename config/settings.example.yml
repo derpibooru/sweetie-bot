@@ -26,6 +26,8 @@ discord:
   # IDs of the ban_appeals role and channel
   appeals_role: '436274219471339520'
   appeals_channel: '436273790465474561'
+  # Name of the bot for some commands.
+  bot_name: 'sweetie'
 # Philomena-specific configuration.
 booru:
   # URL base for URL things.

@@ -3,7 +3,7 @@
 SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase
 
-  if lower.match?(/^(the|this)?\s*bot\b/i)
+  if lower.match?(/^(the|this)?\s*(bot|#{SweetieBot.config.discord.bot_name})\b/i)
     SweetieBot.instance.rate_limit 'nou', 5 do
       emoji = case rand(1..10)
       when 1, 2, 3

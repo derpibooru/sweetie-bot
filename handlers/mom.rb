@@ -53,22 +53,22 @@ SweetieBot.instance.handler do |msg|
 
   lower = msg.text.downcase
 
-  if lower.start_with?("sweetie who is luna's kitty")
+  if lower.start_with?("#{SweetieBot.config.discord.bot_name} who is luna's kitty")
     msg.reply '<@461926422462595092> ^~^', mention: false
     next
   end
 
-  if lower.start_with?("sweetie am i")
+  if lower.start_with?("#{SweetieBot.config.discord.bot_name} am i")
     msg.reply 'yes, of course you are.'
     next
   end
   
-  if lower.start_with?("sweetie what")
+  if lower.start_with?("#{SweetieBot.config.discord.bot_name} what")
     msg.reply DICK_PHRASES.sample, mention: false
     next
   end
 
-  if lower.start_with?('sweetie who')
+  if lower.start_with?("#{SweetieBot.config.discord.bot_name} who")
     if rand(0..1) == 1
       msg.reply RANDOM_PHRASES.sample
     else
