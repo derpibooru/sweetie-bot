@@ -77,14 +77,14 @@ $DISAGREEMENTS = [
 ALLOWED_IDS = %w[128567958086615040 263103777521926145].freeze
 
 SweetieBot.instance.handler do |msg|
+  lower = msg.text.downcase
+
   if lower.start_with?("#{SweetieBot.config.discord.bot_name} are you")
     msg.reply $DISAGREEMENTS.sample
     next
   end
 
   next unless ALLOWED_IDS.include? msg.sender.id.to_s
-
-  lower = msg.text.downcase
 
   if lower.start_with?("#{SweetieBot.config.discord.bot_name} who is luna's kitty")
     msg.reply '<@461926422462595092> ^~^', mention: false
