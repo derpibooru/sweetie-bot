@@ -45,10 +45,43 @@ DICK_PHRASES = [
   'creeper'
 ].freeze
 
+$AGREEMENTS = [
+  'yes, of course you are.',
+  'yes.',
+  'of course ^^',
+  'yep.',
+  'I think so.',
+  'how else would it be~',
+  'yusss.',
+  'obviously.',
+  'well, duh!',
+  'exactly.',
+  'yeah.'
+].freeze
+
+$DISAGREEMENTS = [
+  'no u',
+  'nope.',
+  'naaah.',
+  'obviously not.',
+  "I don't think so.",
+  'ask Luna.',
+  'no comment.',
+  'how about you?',
+  'never.',
+  'ugh... no.',
+  'I disagree'
+].freeze
+
 # Mah bot I choose who gets this :3
 ALLOWED_IDS = %w[128567958086615040 263103777521926145].freeze
 
 SweetieBot.instance.handler do |msg|
+  if lower.start_with?("#{SweetieBot.config.discord.bot_name} are you")
+    msg.reply $DISAGREEMENTS.sample
+    next
+  end
+
   next unless ALLOWED_IDS.include? msg.sender.id.to_s
 
   lower = msg.text.downcase
@@ -59,7 +92,7 @@ SweetieBot.instance.handler do |msg|
   end
 
   if lower.start_with?("#{SweetieBot.config.discord.bot_name} am i")
-    msg.reply 'yes, of course you are.'
+    msg.reply $AGREEMENTS.sample
     next
   end
   
