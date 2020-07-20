@@ -4,22 +4,22 @@ require 'net/http'
 require 'json'
 require 'hashie'
 
-# Derpibooru (philomena) API backend class.
+# Philomena API backend class.
 # @author Luna aka Meow the Cat
 # @attr [String, Number] sfw_filter The ID of the SFW filter to use.
 # @attr [String, Number] nsfw_filter The ID of the NSFW filter to use.
 # @attr [String] api_key Booru-on-Rails API key.
 # @attr [Array<String, Array<String>>] hidden_tags The array of tags to forcibly hide.
-class Derpibooru
+class Philomena
   attr_accessor :sfw_filter, :nsfw_filter, :api_key, :hidden_tags
 
   # Initializes a new API fetcher
   # @param (see `import_config`)
   def initialize(**args)
-    @api_base     = args[:api_base] || 'https://derpibooru.org'
+    @api_base     = args[:api_base] || 'https://philomena.local/api/v1/json'
     @api_key      = args[:key]
-    @sfw_filter   = args[:sfw_filter] || '100073'
-    @nsfw_filter  = args[:nsfw_filter] || '56027'
+    @sfw_filter   = args[:sfw_filter] || '1'
+    @nsfw_filter  = args[:nsfw_filter] || '2'
     @hidden_tags  = args[:hidden_tags] || {}
   end
 
@@ -29,7 +29,7 @@ class Derpibooru
   def import_config(cfg)
     return if cfg.nil?
 
-    @api_base     = cfg['api_url'] || @api_base
+    @api_base     = "#{cfg['url_base']}/api/v1/json" || @api_base
     @api_key      = cfg['api_key'] || @api_key
     @sfw_filter   = cfg['sfw_filter'] || @sfw_filter
     @nsfw_filter  = cfg['nsfw_filter'] || @nsfw_filter

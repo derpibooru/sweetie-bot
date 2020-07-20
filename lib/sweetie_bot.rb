@@ -8,12 +8,12 @@ require 'active_support'
 require 'discord/adapter'
 require 'discord/embed'
 require 'command_dispatcher'
-require 'derpibooru'
+require 'philomena'
 require 'image'
 require 'database'
 
 # API object for easy access and configuration.
-::Booru = Derpibooru.new
+::Booru = Philomena.new
 
 # The main class responsible for the bot.
 # @author Luna aka Meow the Cat
@@ -163,7 +163,7 @@ class SweetieBot
   #   # -c --config-file NAME
   #   # -h --help
   def self.main
-    log "Derpibooru Sweetie Bot v#{version} (#{codename})"
+    log "Philomena Sweetie Bot v#{version} (#{codename})"
 
     @@instance = SweetieBot.new
 

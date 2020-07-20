@@ -1,5 +1,5 @@
 # Sweetie Bot
-A simple Derpibooru image fetching bot with a few extra additions for spice.
+A simple Philomena-based booru image fetching bot with a few extra additions for spice.
 
 ## Running
 ### Prerequisites
@@ -14,8 +14,8 @@ sudo apt-get install libsqlite3-dev
 ### Cloning the Repo and Running
 First, clone the repository and navigate to it's folder
 ```sh
-git clone https://github.com/derpibooru/sweetie-bot
-cd sweetie-bot
+git clone https://github.com/furbooru/furbot
+cd furbot
 ```
 Install all the required packages using Bundler
 ```sh

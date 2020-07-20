@@ -58,7 +58,7 @@ class Image
     rendered_tags = Image.sort_tags(img.tags).join(', ')
 
     embed_data = EmbedBuilder.build do |embed|
-      embed.url = "https://derpibooru.org/#{img.id}"
+      embed.url = "#{SweetieBot.config.booru.url_base}/#{img.id}"
       embed.title = "#{img.id} (#{rating(img)})"
       embed.description = description unless condensed
       embed.timestamp = time

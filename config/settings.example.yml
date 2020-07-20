@@ -26,11 +26,11 @@ discord:
   # IDs of the ban_appeals role and channel
   appeals_role: '436274219471339520'
   appeals_channel: '436273790465474561'
-# Derpibooru-specific configuration.
+# Philomena-specific configuration.
 booru:
-  # Base URL for API calls.
-  api_url: "https://derpibooru.org/api/v1/json"
-  # Derpibooru API key to use.
+  # URL base for URL things.
+  url_base: "https://philomena.local"
+  # Philomena API key to use.
   api_key: ''
   # Filter to use in NSFW channels.
   nsfw_filter: 56027

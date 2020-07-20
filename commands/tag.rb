@@ -8,7 +8,7 @@ CommandDispatcher.register name: 'tag', help_text: 'displays information about a
     next
   end
 
-  text = "<https://derpibooru.org/tags/#{tag.slug}> - **#{tag.images}** images are tagged '_#{tag.name}_'.\n"
+  text = "<#{SweetieBot.config.booru.url_base}/tags/#{tag.slug}> - **#{tag.images}** images are tagged '_#{tag.name}_'.\n"
   text += "#{tag.short_description}\n" if tag.short_description.present?
   text += "**Aliases:** #{tag.aliases.join(', ')}\n" unless tag.aliases.empty?
   text += "**Implies:** #{tag.implied_tags.join(', ')}" unless tag.implied_tags.empty?
