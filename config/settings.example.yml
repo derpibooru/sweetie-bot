@@ -48,6 +48,7 @@ booru:
     - [ grimdark, animal abuse]
     - [ gore, grotesque ]
     - [ foalcon, '!safe' ]
+    - [ cub, '!safe' ]
     - kill yourself
 # Any bots not defined here will not be created.
 bots:
