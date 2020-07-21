@@ -45,7 +45,7 @@ DICK_PHRASES = [
   'creeper'
 ].freeze
 
-$AGREEMENTS = [
+AGREEMENTS = [
   'yes, of course you are.',
   'yes.',
   'of course ^^',
@@ -59,7 +59,7 @@ $AGREEMENTS = [
   'yeah.'
 ].freeze
 
-$DISAGREEMENTS = [
+DISAGREEMENTS = [
   'no u',
   'nope.',
   'naaah.',
@@ -78,36 +78,41 @@ ALLOWED_IDS = %w[128567958086615040 263103777521926145].freeze
 
 SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase
+  response = nil
+  mention = true
 
   if lower.start_with?("#{SweetieBot.config.discord.bot_name} are you")
-    msg.reply $DISAGREEMENTS.sample
-    next
+    response = DISAGREEMENTS.sample
+    mention = true
   end
 
-  next unless ALLOWED_IDS.include? msg.sender.id.to_s
-
-  if lower.start_with?("#{SweetieBot.config.discord.bot_name} who is luna's kitty")
-    msg.reply '<@461926422462595092> ^~^', mention: false
-    next
-  end
-
-  if lower.start_with?("#{SweetieBot.config.discord.bot_name} am i")
-    msg.reply $AGREEMENTS.sample
-    next
-  end
-  
-  if lower.start_with?("#{SweetieBot.config.discord.bot_name} what")
-    msg.reply DICK_PHRASES.sample, mention: false
-    next
-  end
-
-  if lower.start_with?("#{SweetieBot.config.discord.bot_name} who")
-    if rand(0..1) == 1
-      msg.reply RANDOM_PHRASES.sample
-    else
-      msg.reply RAINY_PHRASES.sample
+  if !response && ALLOWED_IDS.include?(msg.sender.id.to_s)
+    if lower.start_with?("#{SweetieBot.config.discord.bot_name} who is luna's kitty")
+      response = '<@461926422462595092> ^~^'
+      mention = false
     end
 
+    if !response && lower.start_with?("#{SweetieBot.config.discord.bot_name} am i")
+      response = AGREEMENTS.sample
+      mention = true
+    end
+
+    if !response && lower.start_with?("#{SweetieBot.config.discord.bot_name} what")
+      response = DICK_PHRASES.sample
+      mention = false
+    end
+
+    if !response && lower.start_with?("#{SweetieBot.config.discord.bot_name} who")
+      response = if rand(0..1) == 1
+        RANDOM_PHRASES.sample
+      else
+        RAINY_PHRASES.sample
+      end
+    end
+  end
+
+  if response
+    msg.reply response, mention: mention
     true
   else
     false

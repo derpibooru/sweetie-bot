@@ -35,9 +35,11 @@ booru:
   # Philomena API key to use.
   api_key: ''
   # Filter to use in NSFW channels.
-  nsfw_filter: 56027
+  nsfw_filter: 2
   # Filter to use in SFW channels.
-  sfw_filter: 100073
+  sfw_filter: 1
+  # Everything filter.
+  everything_filter: 2
   # Tags to hide, separated by adapter.
   hidden_tags:
     # Arrays are considered as AND conditions.

@@ -16,11 +16,12 @@ class Philomena
   # Initializes a new API fetcher
   # @param (see `import_config`)
   def initialize(**args)
-    @api_base     = args[:api_base] || 'https://philomena.local/api/v1/json'
-    @api_key      = args[:key]
-    @sfw_filter   = args[:sfw_filter] || '1'
-    @nsfw_filter  = args[:nsfw_filter] || '2'
-    @hidden_tags  = args[:hidden_tags] || {}
+    @api_base           = args[:api_base] || 'https://philomena.local/api/v1/json'
+    @api_key            = args[:key]
+    @sfw_filter         = args[:sfw_filter] || '1'
+    @nsfw_filter        = args[:nsfw_filter] || '2'
+    @everything_filter  = args[:everything_filter] || '2'
+    @hidden_tags        = args[:hidden_tags] || {}
   end
 
   # Imports configuration.
@@ -29,11 +30,12 @@ class Philomena
   def import_config(cfg)
     return if cfg.nil?
 
-    @api_base     = "#{cfg['url_base']}/api/v1/json" || @api_base
-    @api_key      = cfg['api_key'] || @api_key
-    @sfw_filter   = cfg['sfw_filter'] || @sfw_filter
-    @nsfw_filter  = cfg['nsfw_filter'] || @nsfw_filter
-    @hidden_tags  = cfg['hidden_tags'] || @hidden_tags
+    @api_base           = "#{cfg['url_base']}/api/v1/json" || @api_base
+    @api_key            = cfg['api_key'] || @api_key
+    @sfw_filter         = cfg['sfw_filter'] || @sfw_filter
+    @nsfw_filter        = cfg['nsfw_filter'] || @nsfw_filter
+    @everything_filter  = cfg['everything_filter'] || @everything_filter
+    @hidden_tags        = cfg['hidden_tags'] || @hidden_tags
   end
 
   private
@@ -97,7 +99,7 @@ class Philomena
   # @param t [String] tag name, NOT slug.
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def tag(t)
-    tag = get url: "tags/#{generate_slug(t)}", filter: '56027'
+    tag = get url: "tags/#{generate_slug(t)}", filter: @everything_filter
     tag.tag if tag
   end
 
