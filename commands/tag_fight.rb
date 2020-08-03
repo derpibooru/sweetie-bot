@@ -5,8 +5,8 @@ CommandDispatcher.register name: 'tagfight', help_text: 'compare two search quer
 
   next unless match
 
-  query1 = match[1].strip
-  query2 = match[3].strip
+  query1 = match[1].strip.gsub /\s(or|and|not)\s/, &:upcase
+  query2 = match[3].strip.gsub /\s(or|and|not)\s/, &:upcase
 
   next if query1 == '' || query2 == ''
 
