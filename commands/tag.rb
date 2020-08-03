@@ -8,10 +8,10 @@ CommandDispatcher.register name: 'tag', help_text: 'displays information about a
     next
   end
 
-  text = "<#{SweetieBot.config.booru.url_base}/tags/#{tag.slug}> - **#{tag.images}** images are tagged `#{tag.name}``.\n"
+  text = "<#{SweetieBot.config.booru.url_base}/tags/#{tag.slug}> - **#{tag.images}** images are tagged `#{tag.name}`.\n"
   text += "#{tag.short_description}\n" if tag.short_description.present?
   text += "**Aliases:** `#{tag.aliases.join(', ')}`\n" unless tag.aliases.empty?
-  text += "**Implies:** `#{tag.implied_tags.join(', ')}``" unless tag.implied_tags.empty?
+  text += "**Implies:** `#{tag.implied_tags.join(', ')}`" unless tag.implied_tags.empty?
 
   msg.reply with: text, mention: false
 end
