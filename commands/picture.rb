@@ -4,7 +4,7 @@ ADORABLE_PHRASES = [
   'ADORABLENESS!',
   'CUTENESS INCOMING!',
   'DAWWWW!',
-  'CUTE FURS!'
+  'CUTE STUFF!'
 ].freeze
 
 CommandDispatcher.register name: 'picture', help_text: 'displays a random image matching the search query' do |msg, args|

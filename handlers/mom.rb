@@ -74,7 +74,7 @@ DISAGREEMENTS = [
 ].freeze
 
 # Mah bot I choose who gets this :3
-ALLOWED_IDS = %w[128567958086615040 263103777521926145].freeze
+ALLOWED_IDS = %w[128567958086615040 263103777521926145 721700862459773009 475772802625175583].freeze
 
 SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase

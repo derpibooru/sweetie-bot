@@ -12,12 +12,17 @@ class Image
   # @param msg [Discordrb::Events::MessageEvent] message object.
   # @param id [Number] ID of the image.
   # @return [true, false] `true` if the image was found, `false` otherwise.
-  def self.send_image(msg, id)
+  def self.send_image(msg, id, prev_id = nil)
     img = Booru.image(id, msg.channel.check_nsfw?)
 
     if img
-      embed img, message: msg
-      return true
+      if img.duplicate_of && img.duplicate_of != '' && img.duplicate_of != prev_id
+        sleep(125)
+        return send_image msg, img.duplicate_of, img.id
+      else
+        embed img, message: msg
+        return true
+      end
     end
 
     false

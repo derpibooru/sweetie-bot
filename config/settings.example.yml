@@ -28,6 +28,12 @@ discord:
   appeals_channel: '436273790465474561'
   # Name of the bot for some commands.
   bot_name: 'sweetie'
+  # Should the bot autocorrect links?
+  autocorrect_links: false
+  # What replacements should the bot make?
+  autocorrect_replacements:
+    - ["trixiebooru.org", "derpibooru.org"]
+    - ["www.derpibooru.org", "derpibooru.org"]
 # Philomena-specific configuration.
 booru:
   # URL base for URL things.
