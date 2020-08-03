@@ -39,7 +39,7 @@ class SweetieBot
   # Current version of the bot
   # @return [String] version string in X.X.X-suffix format.
   def self.version
-    '0.9.1'
+    '0.9.2'
   end
 
   # Current version's codename.
