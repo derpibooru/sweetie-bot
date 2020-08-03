@@ -11,7 +11,7 @@ CommandDispatcher.register name: 'tagfight', help_text: 'compare two search quer
   next if query1 == '' || query2 == ''
 
   search_result1 = Booru.search query: query1, filter: SweetieBot.config.booru.everything_filter
-  sleep(125)
+  sleep 0.125
   search_result2 = Booru.search query: query2, filter: SweetieBot.config.booru.everything_filter
 
   total1 = search_result1.total

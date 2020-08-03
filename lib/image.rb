@@ -17,7 +17,7 @@ class Image
 
     if img
       if img.duplicate_of && img.duplicate_of != '' && img.duplicate_of != prev_id
-        sleep(125)
+        sleep 0.125
         return send_image msg, img.duplicate_of, img.id
       else
         embed img, message: msg

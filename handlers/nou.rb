@@ -24,7 +24,7 @@ SweetieBot.instance.handler do |msg|
 
       emoji.each do |char|
         msg.message.react char
-        sleep 0.25
+        sleep 0.125
       end
 
       SweetieBot.log "no u from (or should I say to) #{msg.sender.username}"
