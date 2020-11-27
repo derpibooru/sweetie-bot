@@ -8,6 +8,9 @@ ADORABLE_PHRASES = [
 ].freeze
 
 CommandDispatcher.register name: 'picture', help_text: 'displays a random image matching the search query' do |msg, args|
+  query = "(#{args.raw})"
+  query += ', ' + Booru.no_search_tags.map { |t| "!#{t}" }.join(',') unless Booru.no_search_tags.empty?
+
   img = Booru.random_image args.raw, msg.channel.check_nsfw?
 
   if img

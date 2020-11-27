@@ -21,7 +21,8 @@ class Philomena
     @sfw_filter         = args[:sfw_filter] || '1'
     @nsfw_filter        = args[:nsfw_filter] || '2'
     @everything_filter  = args[:everything_filter] || '2'
-    @hidden_tags        = args[:hidden_tags] || {}
+    @hidden_tags        = args[:hidden_tags] || []
+    @no_search_tags     = args[:no_search_tags] || []
   end
 
   # Imports configuration.
@@ -36,6 +37,7 @@ class Philomena
     @nsfw_filter        = cfg['nsfw_filter'] || @nsfw_filter
     @everything_filter  = cfg['everything_filter'] || @everything_filter
     @hidden_tags        = cfg['hidden_tags'] || @hidden_tags
+    @no_search_tags     = cfg['no_search_tags'] || @no_search_tags
   end
 
   private

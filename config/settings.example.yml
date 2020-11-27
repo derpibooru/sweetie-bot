@@ -56,6 +56,9 @@ booru:
     - [ foalcon, '!safe' ]
     - [ cub, '!safe' ]
     - kill yourself
+  # No search tags
+  no_search_tags:
+    - tag_count.gt:200
 # Any bots not defined here will not be created.
 bots:
   # Example Discord configuration
