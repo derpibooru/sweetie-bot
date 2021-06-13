@@ -11,7 +11,7 @@ require 'hashie'
 # @attr [String] api_key Booru-on-Rails API key.
 # @attr [Array<String, Array<String>>] hidden_tags The array of tags to forcibly hide.
 class Philomena
-  attr_accessor :sfw_filter, :nsfw_filter, :api_key, :hidden_tags
+  attr_accessor :sfw_filter, :nsfw_filter, :api_key, :hidden_tags, :no_search_tags
 
   # Initializes a new API fetcher
   # @param (see `import_config`)
