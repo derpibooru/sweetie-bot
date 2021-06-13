@@ -86,7 +86,7 @@ class Image
 
       embed.field do |f|
         f.name = 'Score'
-        f.value = "#{img.upvotes}⭡  **#{img.score}**  ⭣#{img.downvotes}"
+        f.value = "#{img.upvotes}<:arrowup2:853633531790884904> **#{img.score}** <:arrowdown2:853633532115157043>#{img.downvotes}"
         f.inline = true
       end
 
