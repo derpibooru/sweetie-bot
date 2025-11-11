@@ -16,9 +16,9 @@ class Image
     img = Booru.image(id, msg.channel.check_nsfw?)
 
     if img
-      if img.duplicate_of && img.duplicate_of != '' && img.duplicate_of != prev_id
+      if img['duplicate_of'] && img['duplicate_of'] != '' && img['duplicate_of'] != prev_id
         sleep 0.125
-        return send_image msg, img.duplicate_of, img.id
+        return send_image msg, img['duplicate_of'], img['id']
       else
         embed img, message: msg
         return true
@@ -41,9 +41,9 @@ class Image
 
     condensed = args[:condense] || false
     message = args[:message] || args[:msg]
-    time = Time.parse(img.created_at)
+    time = Time.parse(img['created_at'])
     nice_time = RelativeTime.in_words(time)
-    description = args[:description] || (img.description.length < max_desc_len ? img.description : "#{img.description[0..max_desc_len]}...")
+    description = args[:description] || (img['description'].length < max_desc_len ? img['description'] : "#{img['description'][0..max_desc_len]}...")
     description = description.gsub(/(\r\n|\\r\\n|\\n)/, "\n")
     description = description.gsub(/\n\n\n/, "\n\n") while description.include?("\n\n\n")
 
@@ -52,24 +52,24 @@ class Image
       return false
     end
 
-    is_webm = img.mime_type == 'video/webm'
+    is_webm = img['mime_type'] == 'video/webm'
 
-    embed_text = if img.spoilered
-      "This **#{rating(img)}** image is spoilered by my current filter (may contain imagery not suitable for everyone)!\n||#{img.representations.full} ||"
+    embed_text = if img['spoilered']
+      "This **#{rating(img)}** image is spoilered by my current filter (may contain imagery not suitable for everyone)!\n||#{img['representations']['full']} ||"
     else
       ''
     end
 
-    rendered_tags = Image.sort_tags(img.tags).join(', ')
+    rendered_tags = Image.sort_tags(img['tags']).join(', ')
 
     embed_data = EmbedBuilder.build do |embed|
-      embed.url = "#{SweetieBot.config.booru.url_base}/#{img.id}"
-      embed.title = "#{img.id} (#{rating(img)})"
+      embed.url = "#{SweetieBot.config.booru.url_base}/#{img['id']}"
+      embed.title = "#{img['id']} (#{rating(img)})"
       embed.description = description unless condensed
       embed.timestamp = time
       embed.color = rating_color(rating(img))
 
-      embed.image img.representations.full unless is_webm
+      embed.image img['representations']['full'] unless is_webm
 
       unless condensed
         embed.field do |f|
@@ -80,26 +80,26 @@ class Image
 
       embed.field do |f|
         f.name = 'Comments'
-        f.value = "**#{img.comment_count}**"
+        f.value = "**#{img['comment_count']}**"
         f.inline = true
       end
 
       embed.field do |f|
         f.name = 'Score'
-        f.value = "#{img.upvotes}<:arrowup2:853633531790884904> **#{img.score}** <:arrowdown2:853633532115157043>#{img.downvotes}"
+        f.value = "#{img['upvotes']}<:arrowup2:853633531790884904> **#{img['score']}** <:arrowdown2:853633532115157043>#{img['downvotes']}"
         f.inline = true
       end
 
-      embed.footer "Uploaded #{nice_time} by #{img.uploader}."
+      embed.footer "Uploaded #{nice_time} by #{img['uploader']}."
     end
 
     message.send_message embed_text, false, embed_data
 
     if is_webm
-      if !img.spoilered
-        message.send_message img.representations.full
+      if !img['spoilered']
+        message.send_message img['representations']['full']
       else
-        message.send_message "||#{img.representations.full}||"
+        message.send_message "||#{img['representations']['full']}||"
       end
     end
   end
@@ -121,7 +121,7 @@ class Image
   # @param img [Hash] Image data.
   # @return [String] Rating tag, or "unknown" if none are present.
   def self.rating(img)
-    img.tags.select do |tag|
+    img['tags'].select do |tag|
       Image::RATING_TAGS.include? tag
     end.first
   end
@@ -141,7 +141,7 @@ class Image
   # @param tag [String] tag to search for.
   # @return [Boolean] whether the tag is present or not.
   def self.tag?(img, tag)
-    Image.tags_contain? img.tags, tag
+    Image.tags_contain? img['tags'], tag
   end
 
   # Returns the color based on rating, in Discord's number notation.
@@ -171,7 +171,7 @@ class Image
   # @return [true, false] `true` if censored, `false` otherwise.
   def self.censored?(img)
     censored_tags = Booru.hidden_tags
-    tags = img.tags
+    tags = img['tags']
 
     censored_tags.each do |censor|
       if censor.is_a?(String)

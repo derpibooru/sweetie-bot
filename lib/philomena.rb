@@ -17,7 +17,7 @@ class Philomena
   # @param (see `import_config`)
   def initialize(**args)
     @api_base           = args[:api_base] || 'https://philomena.local/api/v1/json'
-    @api_key            = args[:key]
+    @api_key            = ENV['PHILOMENA_API_KEY'] || args[:key]
     @sfw_filter         = args[:sfw_filter] || '1'
     @nsfw_filter        = args[:nsfw_filter] || '2'
     @everything_filter  = args[:everything_filter] || '2'
@@ -32,7 +32,7 @@ class Philomena
     return if cfg.nil?
 
     @api_base           = "#{cfg['url_base']}/api/v1/json" || @api_base
-    @api_key            = cfg['api_key'] || @api_key
+    @api_key            = ENV['PHILOMENA_API_KEY'] || cfg['api_key'] || @api_key
     @sfw_filter         = cfg['sfw_filter'] || @sfw_filter
     @nsfw_filter        = cfg['nsfw_filter'] || @nsfw_filter
     @everything_filter  = cfg['everything_filter'] || @everything_filter
@@ -69,7 +69,7 @@ class Philomena
   # @option args [String] :query the query to append.
   # @option args [Boolean] :nsfw `true` to use NSFW filter, `false` to use SFW filter.
   # @option args [Number] :filter filter ID override.
-  # @return [Hashie::Mash] Query result, `nil` if nothing is found.
+  # @return [Hash] Query result, `nil` if nothing is found.
   def get(**args)
     args[:url] ||= args[:link] || args[:uri]
     args[:query] ||= args[:params]
@@ -83,7 +83,7 @@ class Philomena
 
     response = Net::HTTP.get_response uri
 
-    Hashie::Mash.new JSON.parse(response.body) if response.class == Net::HTTPOK
+    JSON.parse(response.body) if response.class == Net::HTTPOK
   end
 
   public
@@ -102,7 +102,7 @@ class Philomena
   # @return [Hashie::Mash, nil] Query result, `nil` if nothing is found.
   def tag(t)
     tag = get url: "tags/#{generate_slug(t)}", filter: @everything_filter
-    tag.tag if tag
+    tag['tag'] if tag
   end
 
   # Searches for images based on the given query.
@@ -124,7 +124,7 @@ class Philomena
 
     if img
       img_data = img['images'][0]
-      image img_data.id, nsfw if img_data
+      image img_data['id'], nsfw if img_data
     end
   end
 end

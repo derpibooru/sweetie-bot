@@ -1,15 +1,42 @@
 # Sweetie Bot
 A simple Philomena-based booru image fetching bot with a few extra additions for spice.
 
-## Running
+## Configuring
+The provided `settings.example.yml` file is well-commented and should provide enough documentation for you to tweak the bot to your liking.
+
+## Running in Docker
+
+Copy `settings.example.yml` and `database.example.yml` as `settings.yml` and `database.yml`, and fill those out.
+
+Create and import the database schema from `structure.sql`
+```
+sqlite3 ./bot.db
+sqlite> .read ./db/structure.sql
+```
+
+Run the bot:
+
+```
+docker run --rm -it \
+  -v ./settings.yml:/opt/sweetie-bot/config/settings.yml \
+  -v ./database.yml:/opt/sweetie-bot/config/database.yml \
+  -v ./bot.db:/opt/sweetie-bot/db/bot.db \
+  -e DISCORD_BOT_TOKEN=your_discord_bot_token_here \
+  -e PHILOMENA_API_KEY=your_booru_api_key_here \
+  ghcr.io/derpibooru/sweetie-bot
+```
+
+## Running Manually
 ### Prerequisites
-* Linux (Debian Stretch / Ubuntu 16.04 or newer recommended)
-* Ruby 2.7.1
+* Linux (anything non-musl will probably work)
+* Ruby 3.4.7
 * `libsqlite3-dev`
 
 ```sh
 sudo apt-get install libsqlite3-dev
 ```
+
+...or your distribution's package manager. You're a grown-up adult, you can figure it out, probably.
 
 ### Cloning the Repo and Running
 First, clone the repository and navigate to it's folder
@@ -25,11 +52,10 @@ Copy the example config file (located in the `config/` folder) and modify it
 ```sh
 cp settings.example.yml settings.yml
 ```
-Migrate the database
-(Please note that this migration engine is hilariously broken. Basically you can only migrate it once and then it breaks.)
-(todo: rewrite everything)
-```sh
-rake db:migrate
+Import the database schema from `structure.sql`
+```
+sqlite3 ./db/bot.db
+sqlite> .read ./db/structure.sql
 ```
 Once you're done, you can run the bot by running
 ```sh
@@ -39,8 +65,3 @@ If you want to load a specific configuration file, you can use `-c` to specify i
 ```sh
 ./bin/sweetie-bot -c settings.yml
 ```
-
-### Configuration
-The provided `settings.example.yml` file is well-commented and should provide enough documentation for you to tweak the bot to your liking.
-
-**If running as self-bot, make sure to change `:bot` to `:user` in `client_type`! Running a self-bot is highly discouraged and is against Discord ToS.**

@@ -83,14 +83,14 @@ class DiscordConnection
 
   def initialize(opts)
     @raw = Discordrb::Bot.new(
-      token:       opts.token,
+      token:       ENV['DISCORD_BOT_TOKEN'] || opts.token,
       type:        (opts.client_type || :bot),
       parse_self:  !opts.ignore_self,
       ignore_bots: opts.ignore_bots
     )
 
     @raw.ready do
-      @raw.game = "Sweetie Bot v#{SweetieBot.version}" if opts.display_version
+      @raw.game = "#{opts.bot_title} v#{SweetieBot.version}" if opts.display_version
     end
   end
 

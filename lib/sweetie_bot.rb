@@ -39,13 +39,13 @@ class SweetieBot
   # Current version of the bot
   # @return [String] version string in X.X.X-suffix format.
   def self.version
-    '0.9.2'
+    '1.0.0'
   end
 
   # Current version's codename.
   # @return [String] codename of the current major (x.X.x) release.
   def self.codename
-    'Furry Ponies'
+    'Final Release'
   end
 
   # Getter for the current running instance of SweetieBot.
@@ -163,7 +163,7 @@ class SweetieBot
   #   # -c --config-file NAME
   #   # -h --help
   def self.main
-    log "Philomena Sweetie Bot v#{version} (#{codename})"
+    log "Sweetie Bot v#{version} (#{codename})"
 
     @@instance = SweetieBot.new
 

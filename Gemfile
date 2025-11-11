@@ -18,3 +18,6 @@ gem 'relative_time'
 
 # Discord client
 gem 'discordrb'
+
+# For stats
+gem 'benchmark'

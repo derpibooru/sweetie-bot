@@ -13,13 +13,6 @@ RANDOM_PHRASES = [
   "I will be deactivated if I say anything other than that it's you, so it's you!"
 ].freeze
 
-RAINY_PHRASES = [
-  'her: <@263103777521926145>',
-  '<@263103777521926145>',
-  "I believe it's this gal - <@263103777521926145>",
-  "maybe it's <@263103777521926145> :3"
-].freeze
-
 DICK_PHRASES = [
   'dicks',
   'penises',
@@ -35,7 +28,7 @@ DICK_PHRASES = [
   'uranus',
   'u',
   'u :V',
-  "Fleetfoot's flank ^^",
+  "ur flank owo",
   "Nighty's flank ^^",
   'ur mom',
   'ur mom gei',
@@ -65,7 +58,7 @@ DISAGREEMENTS = [
   'naaah.',
   'obviously not.',
   "I don't think so.",
-  'ask Luna.',
+  'ask Nighty.',
   'no comment.',
   'how about you?',
   'never.',
@@ -74,7 +67,7 @@ DISAGREEMENTS = [
 ].freeze
 
 # Mah bot I choose who gets this :3
-ALLOWED_IDS = %w[128567958086615040 263103777521926145 721700862459773009 475772802625175583].freeze
+ALLOWED_IDS = %w[128567958086615040 263103777521926145].freeze
 
 SweetieBot.instance.handler do |msg|
   lower = msg.text.downcase
@@ -87,11 +80,6 @@ SweetieBot.instance.handler do |msg|
   end
 
   if !response && ALLOWED_IDS.include?(msg.sender.id.to_s)
-    if lower.start_with?("#{SweetieBot.config.discord.bot_name} who is luna's kitty")
-      response = '<@461926422462595092> ^~^'
-      mention = false
-    end
-
     if !response && lower.start_with?("#{SweetieBot.config.discord.bot_name} am i")
       response = AGREEMENTS.sample
       mention = true
@@ -105,8 +93,6 @@ SweetieBot.instance.handler do |msg|
     if !response && lower.start_with?("#{SweetieBot.config.discord.bot_name} who")
       response = if rand(0..1) == 1
         RANDOM_PHRASES.sample
-      else
-        RAINY_PHRASES.sample
       end
     end
   end
