@@ -17,7 +17,7 @@ gem 'hashie'
 gem 'relative_time'
 
 # Discord client
-gem 'discordrb'
+gem 'discordrb', git: 'https://github.com/shardlab/discordrb.git', ref: 'eab8599'
 
 # For stats
 gem 'benchmark'
